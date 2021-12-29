@@ -1,0 +1,9 @@
+.elements__label {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    max-width: 246px;
+    margin: 25px auto 0;
+}
