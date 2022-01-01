@@ -6,8 +6,18 @@
     border-bottom: 1px solid #545454;
 }
 
-@media screen and (max-width: ) {
+@media screen and (max-width: 1000px) {
     .header {
+        max-width: calc(100% - 60px);
+    }
+}
 
+@media screen and (max-width: 430px) {
+    .header {
+        margin: 28px 0 0;
+        max-width: 100%;
+        min-height: 56px;
+        padding-left: 27px;
+        box-sizing: border-box;
     }
 }
