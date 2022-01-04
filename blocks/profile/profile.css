@@ -11,9 +11,9 @@
 
 @media screen and (max-width: 768px) {
     .profile {
-        min-height: 286px;
+        min-height: 216px;
         grid-template-columns: 150px 336px;
-        grid-template-rows: 120px 50px;
+        grid-template-rows: 120px 60px;
         row-gap: 36px;
     }
 }

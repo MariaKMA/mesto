@@ -1,0 +1,10 @@
+.elements__like-icon {
+    width: 22px;
+    height: 19px;
+    align-self: center;
+}
+
+.elements__like-icon:hover {
+    opacity: .8;
+    cursor: pointer;
+}
