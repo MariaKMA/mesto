@@ -7,3 +7,12 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 530px) {
+    .profile__user-name {
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 33px;
+        text-align: end;
+    }
+}

@@ -12,3 +12,12 @@
     justify-self: end;
     align-self: center;
 }
+
+@media screen and (max-width: 768px) {
+    .profile__add-btn {
+        width: 100%;
+        grid-column: 1 / -1;
+        margin-top: 10px;
+        background-size: 16px 16px;
+    }
+}

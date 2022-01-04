@@ -5,3 +5,11 @@
     column-gap: 18px;
     align-content: center;
 }
+
+@media screen and (max-width: 530px) {
+     .profile__info {
+        grid-template-columns: 1fr 37px;
+        grid-template-rows: 40px 14px;
+        column-gap: 10px;
+     }
+}
