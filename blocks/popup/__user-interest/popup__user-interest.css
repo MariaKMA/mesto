@@ -6,10 +6,11 @@
     line-height: 17px;
     min-height: 27px;
     padding: 0;
-    padding-bottom: 13px;
+    padding-bottom: 9px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .3);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    box-sizing: border-box;
 }
