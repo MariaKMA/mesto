@@ -30,7 +30,7 @@ function closePopup() {
 }
 
 
-// Отправка формы
+// Редактирование профиля и отправка формы
 
 let formElement = document.querySelector('.popup__container');
 let nameInput = formElement.querySelector('.popup__user-name');
