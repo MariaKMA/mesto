@@ -14,5 +14,3 @@
 **Ссылка на проект на GitHub Pages**
 
 https://mariakma.github.io/mesto/
-
-
