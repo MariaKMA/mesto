@@ -13,4 +13,4 @@
 
 **Ссылка на проект**
 
-* [Ссылка на проект на GitHub Pages] https://mariakma.github.io/mesto/
+* [Ссылка на проект на GitHub Pages]https://mariakma.github.io/mesto/
