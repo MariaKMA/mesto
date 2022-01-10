@@ -8,12 +8,12 @@ function openPopup() {
     popup.classList.add('popup_active');
 
     let profile_user_name = document.querySelector('.profile__user-name');
-    let popup_user_name = document.querySelector('.popup__user-name');
+    let popup_user_name = document.querySelector('.popup__user_type_name');
 
     popup_user_name.value = profile_user_name.textContent;
 
     let profile_user_interest = document.querySelector('.profile__user-interest');
-    let popup_user_interest = document.querySelector('.popup__user-interest');
+    let popup_user_interest = document.querySelector('.popup__user_type_interest');
 
     popup_user_interest.value = profile_user_interest.textContent;
 }
@@ -33,8 +33,8 @@ function closePopup() {
 // Редактирование профиля и отправка формы
 
 let formElement = document.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__user-name');
-let jobInput = formElement.querySelector('.popup__user-interest');
+let nameInput = formElement.querySelector('.popup__user_type_name');
+let jobInput = formElement.querySelector('.popup__user_type_interest');
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
