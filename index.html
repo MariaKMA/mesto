@@ -19,70 +19,60 @@
             <img src="./images/image.jpg" alt="Аватарка" class="profile__avatar">
             <div class="profile__info">
                 <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-btn"></button>
+                <button class="profile__edit-btn" aria-label="Редактировать профиль"></button>
                 <p class="profile__user-interest">Исследователь океана</p>
             </div>
-            <button class="profile__add-btn"></button>
+            <button class="profile__add-btn" aria-label="Добавить новый профиль"></button>
 
         </section>
 
-        <section class="popup">
-            <form class="popup__container">
-                <h2 class="popup__header">Редактировать профиль</h2>
-                <input type="text" class="popup__user-name">
-                <input type="text" class="popup__user-interest">
-                <button class="popup__save-btn">Сохранить</button>
-                <span class="popup__close-btn"></span>
-            </form>
-        </section>
+        <section class="cards">
 
-        <section class="elements">
-
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаевска" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Карачаевск</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаевска" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Карачаевск</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Гора Эльбрус</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Гора Эльбрус</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Домбай</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Домбай</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Гора Эльбрус</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Гора Эльбрус</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Домбай</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Домбай</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
-            <div class="elements__element">
-                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаево-Черкессии" class="elements__img">
-                <div class="elements__label">
-                    <p class="elements__caption">Карачаево-Черкессия</p>
-                    <img src="./images/likeButton.svg" alt="Иконка like" class="elements__like-icon">
+            <div class="cards__card">
+                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаево-Черкессии" class="cards__img">
+                <div class="cards__label">
+                    <p class="cards__caption">Карачаево-Черкессия</p>
+                    <img src="./images/likeButton.svg" alt="Иконка like" class="cards__like-icon">
                 </div>
             </div>
 
@@ -93,6 +83,16 @@
     <footer class="footer">
         <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
+
+    <article class="popup">
+        <form class="popup__container" name="profileForm">
+            <h2 class="popup__header">Редактировать профиль</h2>
+            <input type="text" name="userName" class="popup__user-name">
+            <input type="text" name="userInterest" class="popup__user-interest">
+            <button class="popup__save-btn">Сохранить</button>
+            <button class="popup__close-btn" aria-label="Закрыть форму редактирования профиля"></button>
+        </form>
+    </article>
 
     <script src="./script.js"></script>
 

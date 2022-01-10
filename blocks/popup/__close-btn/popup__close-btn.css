@@ -8,6 +8,9 @@
     background-image: url(../../../images/closeIcon.svg);
     background-size: 32px 32px;
     background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 0;
+    border: none;
 }
 
 .popup__close-btn:hover {
@@ -20,7 +23,6 @@
         width: 20px;
         height: 20px;
         background-size: 20px 20px;
-        background-repeat: no-repeat;
         right: 0;
         top: -36px;
     }
