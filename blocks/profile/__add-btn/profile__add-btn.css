@@ -11,7 +11,7 @@
     height: 50px;
     justify-self: end;
     align-self: center;
-    transition: opacity 1s ease-in;
+    transition: opacity .5s ease-in-out;
 }
 
 .profile__add-btn:hover {
