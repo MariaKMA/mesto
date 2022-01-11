@@ -1,49 +1,37 @@
+let popupEditBtn = document.querySelector('.profile__edit-btn');
+let popup = document.querySelector('.popup');
+let profileUserName = document.querySelector('.profile__user-name');
+let profileUserInterest = document.querySelector('.profile__user-interest');
+let popupCloseBtn = document.querySelector('.popup__close-btn');
+let formElement = document.querySelector('.popup__container');
+let nameInput = formElement.querySelector('.popup__user_type_name');
+let jobInput = formElement.querySelector('.popup__user_type_interest');
+
 // Открыть попап
 
-let popup_edit_btn = document.querySelector('.profile__edit-btn');
-popup_edit_btn.addEventListener('click', openPopup);
+popupEditBtn.addEventListener('click', openPopup);
 
 function openPopup() {
-    let popup = document.querySelector('.popup');
     popup.classList.add('popup_active');
-
-    let profile_user_name = document.querySelector('.profile__user-name');
-    let popup_user_name = document.querySelector('.popup__user_type_name');
-
-    popup_user_name.value = profile_user_name.textContent;
-
-    let profile_user_interest = document.querySelector('.profile__user-interest');
-    let popup_user_interest = document.querySelector('.popup__user_type_interest');
-
-    popup_user_interest.value = profile_user_interest.textContent;
+    nameInput.value = profileUserName.textContent;
+    jobInput.value = profileUserInterest.textContent;
 }
-
 
 // Закрыть попап
 
-let popup_close_btn = document.querySelector('.popup__close-btn');
-popup_close_btn.addEventListener('click', closePopup);
+popupCloseBtn.addEventListener('click', closePopup);
 
 function closePopup() {
-    let popup = document.querySelector('.popup');
     popup.classList.remove('popup_active');
 }
 
 
 // Редактирование профиля и отправка формы
 
-let formElement = document.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__user_type_name');
-let jobInput = formElement.querySelector('.popup__user_type_interest');
-
 function formSubmitHandler (evt) {
     evt.preventDefault();
-
-    let profile_user_name = document.querySelector('.profile__user-name');
-    let profile_user_interest = document.querySelector('.profile__user-interest');
-
-    profile_user_name.textContent = nameInput.value;
-    profile_user_interest.textContent = jobInput.value;
+    profileUserName.textContent = nameInput.value;
+    profileUserInterest.textContent = jobInput.value;
 
     closePopup();
 }
