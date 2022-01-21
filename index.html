@@ -28,54 +28,6 @@
 
         <section class="cards">
 
-            <article class="card">
-                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаевска" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Карачаевск</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
-            <article class="card">
-                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Гора Эльбрус</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
-            <article class="card">
-                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Домбай</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
-            <article class="card">
-                <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Изображение Эльбруса" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Гора Эльбрус</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
-            <article class="card">
-                <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Изображение Домбая" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Домбай</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
-            <article class="card">
-                <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Изображение Карачаево-Черкессии" class="card__img">
-                <div class="card__label">
-                    <h2 class="card__caption">Карачаево-Черкессия</h2>
-                    <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
-                </div>
-            </article>
-
         </section>
 
     </main>
@@ -93,6 +45,16 @@
             <button type="button" class="popup__close-btn" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
     </article>
+
+    <template id="card">
+        <article class="card">
+            <img class="card__img">
+            <div class="card__label">
+                <h2 class="card__caption"></h2>
+                <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
+            </div>
+        </article>
+    </template>
 
     <script src="./script.js"></script>
 
