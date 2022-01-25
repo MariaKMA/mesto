@@ -22,7 +22,7 @@
                 <button class="profile__edit-btn" type="button" aria-label="Редактировать профиль"></button>
                 <p class="profile__user-interest">Исследователь океана</p>
             </div>
-            <button class="profile__add-btn" type="button" aria-label="Добавить новый профиль"></button>
+            <button class="profile__add-btn" type="button" aria-label="Добавить новую карточку"></button>
 
         </section>
 
@@ -36,13 +36,23 @@
         <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
 
-    <article class="popup">
-        <form class="popup__container" name="profileForm">
+    <article class="popup popup_type_user">
+        <form class="popup__container popup__container_type_user" name="profileForm">
             <h2 class="popup__header">Редактировать профиль</h2>
-            <input type="text" name="userName" class="popup__user popup__user_type_name">
-            <input type="text" name="userInterest" class="popup__user popup__user_type_interest">
-            <button type="submit" class="popup__save-btn">Сохранить</button>
-            <button type="button" class="popup__close-btn" aria-label="Закрыть форму редактирования профиля"></button>
+            <input type="text" name="userName" class="popup__input popup__user popup__user_type_name">
+            <input type="text" name="userInterest" class="popup__input popup__user popup__user_type_interest">
+            <button type="submit" class="popup__save-btn popup_type_user__save-btn">Сохранить</button>
+            <button type="button" class="popup__close-btn popup_type_user__close-btn" aria-label="Закрыть форму редактирования профиля"></button>
+        </form>
+    </article>
+
+    <article class="popup popup_type_place">
+        <form class="popup__container popup__container_type_place" name="profileForm">
+            <h2 class="popup__header">Новое место</h2>
+            <input type="text" name="placeTitle" placeholder="Название" class="popup__input popup__place popup__place_type_title">
+            <input type="text" name="imageLink" placeholder="Ссылка на картинку" class="popup__input popup__place popup__place_type_link">
+            <button type="submit" class="popup__save-btn popup_type_place__save-btn">Создать</button>
+            <button type="button" class="popup__close-btn popup_type_place__close-btn" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
     </article>
 
