@@ -90,6 +90,9 @@ initialCards.forEach(item => {
     cardElement.querySelector('.card__img').src = item.link;
     cardElement.querySelector('.card__caption').textContent = item.name;
     cardsSection.append(cardElement);
+
+    // навесить карточке событие клика по like icon
+    likeCard(cardElement);
     }
 )
 
@@ -124,6 +127,16 @@ function addCardHandler (evt) {
     cardsSection.prepend(cardElement);
 
     closePopupAddPlace();
+
+    // навесить новой карточке событие клика по иконке like
+    likeCard(cardElement);
 }
 
 formElementTypePlace.addEventListener('submit', addCardHandler);
+
+// Лайкнуть картинку
+
+function likeCard(cardElement) {
+    const likeIcon = cardElement.querySelector('.card__like-icon');
+    likeIcon.addEventListener('click', () => likeIcon.classList.toggle('card__like-icon_active'));
+}

@@ -1,4 +1,4 @@
 .card__like-icon_active {
-    background-color: black;
-    transition: opacity .5s ease-in-out;
+    background: url(../../../../images/likeButtonBlack.svg);
+    transition: background .5s ease-in-out;
 }
