@@ -91,8 +91,9 @@ initialCards.forEach(item => {
     cardElement.querySelector('.card__caption').textContent = item.name;
     cardsSection.append(cardElement);
 
-    // навесить карточке событие клика по like icon
+    // навесить новой карточке события клика по иконке like и иконке trash
     likeCard(cardElement);
+    deleteCard(cardElement)
     }
 )
 
@@ -128,8 +129,9 @@ function addCardHandler (evt) {
 
     closePopupAddPlace();
 
-    // навесить новой карточке событие клика по иконке like
+    // навесить новой карточке события клика по иконке like и иконке trash
     likeCard(cardElement);
+    deleteCard(cardElement)
 }
 
 formElementTypePlace.addEventListener('submit', addCardHandler);
@@ -139,4 +141,11 @@ formElementTypePlace.addEventListener('submit', addCardHandler);
 function likeCard(cardElement) {
     const likeIcon = cardElement.querySelector('.card__like-icon');
     likeIcon.addEventListener('click', () => likeIcon.classList.toggle('card__like-icon_active'));
+}
+
+// Удалить картинку
+
+function deleteCard(cardElement) {
+    const trashIcon = cardElement.querySelector('.card__trash-icon');
+    trashIcon.addEventListener('click', () => trashIcon.closest('.card').remove());
 }
