@@ -1,0 +1,9 @@
+.popup__container_type_view-pic {
+    width: max-content;
+    max-width: 75vw;
+    max-height: 75vh;
+    background: none;
+    color: white;
+    padding: 0;
+    box-shadow: none;
+}

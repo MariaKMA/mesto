@@ -17,7 +17,7 @@ let jobInput = formElementTypeUser.querySelector('.popup__user_type_interest');
 const cardsSection = document.querySelector('.cards');
 let popupAddBtn = document.querySelector('.profile__add-btn');
 let cardCaption = document.querySelector('.card__caption');
-let cardLink = document.querySelector('.card__img');
+// let cardLink = document.querySelector('.card__img');
 let placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
 let placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
 
@@ -88,6 +88,7 @@ initialCards.forEach(item => {
     const cardTemplate = document.querySelector('#card').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     cardElement.querySelector('.card__img').src = item.link;
+    cardElement.querySelector('.card__img').alt = item.name;
     cardElement.querySelector('.card__caption').textContent = item.name;
     cardsSection.append(cardElement);
 
@@ -124,6 +125,7 @@ function addCardHandler (evt) {
     const cardTemplate = document.querySelector('#card').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     cardElement.querySelector('.card__img').src = placeLinkInput.value;
+    cardElement.querySelector('.card__img').alt = placeCaptionInput.value;
     cardElement.querySelector('.card__caption').textContent = placeCaptionInput.value;
     cardsSection.prepend(cardElement);
 
@@ -149,3 +151,31 @@ function deleteCard(cardElement) {
     const trashIcon = cardElement.querySelector('.card__trash-icon');
     trashIcon.addEventListener('click', () => trashIcon.closest('.card').remove());
 }
+
+// Просмотр картинки - открыть попап
+
+const cards = document.querySelectorAll('.card');
+// const images = document.querySelectorAll('.card__img');
+const popupViewPic = document.querySelector('.popup_type_view-pic');
+const popupImg = document.querySelector('.popup__image');
+const popupHeaderViewPic = document.querySelector('.popup__header_type_view-pic');
+const cardHeaders = document.querySelectorAll('.card__caption');
+
+// Навесить событие просмотра картинки по клику
+
+cards.forEach(function(item) {
+    const image = item.querySelector('.card__img');
+    image.addEventListener('click', () => {
+        popupViewPic.classList.add('popup_active');
+        popupImg.src = image.src;
+        popupImg.alt = image.alt;
+        popupHeaderViewPic.textContent = item.querySelector('.card__caption').textContent;
+    });
+})
+
+// Закрыть попап с картинкой
+
+const popupViewPicCloseBtn = popupViewPic.querySelector('.popup__close-btn_type_view-pic');
+popupViewPicCloseBtn.addEventListener('click', () => {
+    popupViewPic.classList.remove('popup_active');
+})
