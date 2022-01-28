@@ -1,7 +1,7 @@
 const popupTypeUser = document.querySelector('.popup_type_user');
 const popupTypePlace = document.querySelector('.popup_type_place');
-const popupTypeUserCloseBtn = document.querySelector('.popup_type_user__close-btn');
-const popupTypePlaceCloseBtn = document.querySelector('.popup_type_place__close-btn');
+const popupTypeUserCloseBtn = document.querySelector('.popup__close-btn_type_user');
+const popupTypePlaceCloseBtn = document.querySelector('.popup__close-btn_type_place');
 const formElementTypeUser = document.querySelector('.popup__container_type_user');
 const formElementTypePlace = document.querySelector('.popup__container_type_place');
 
@@ -90,7 +90,7 @@ initialCards.forEach(item => {
 
     // навесить новой карточке события клика по иконке like и иконке trash
     likeCard(cardElement);
-    deleteCard(cardElement)
+    deleteCard(cardElement);
     }
 )
 
@@ -129,7 +129,7 @@ function addCardHandler (evt) {
 
     // навесить новой карточке события клика по иконке like и иконке trash
     likeCard(cardElement);
-    deleteCard(cardElement)
+    deleteCard(cardElement);
 }
 
 formElementTypePlace.addEventListener('submit', addCardHandler);
