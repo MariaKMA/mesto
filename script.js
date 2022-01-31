@@ -46,36 +46,38 @@ const initialCards = [
 ];
 
 
-// Открыть попап редактирования пользователя
+function openPopup(popup) {
+    popup.classList.add('popup_active');
+}
+
+function closePopup(popup) {
+    popup.classList.remove('popup_active');
+}
+
+// Попап редактирования пользователя
 
 popupEditBtn.addEventListener('click', openPopupEditForm);
 
 function openPopupEditForm() {
-    popupTypeUser.classList.add('popup_active');
+    openPopup(popupTypeUser);
     nameInput.value = profileUserName.textContent;
     jobInput.value = profileUserInterest.textContent;
 }
 
-// Закрыть попап редактирования профиля
-
-popupTypeUserCloseBtn.addEventListener('click', closePopupEditForm);
-
-function closePopupEditForm() {
-    popupTypeUser.classList.remove('popup_active');
-}
+popupTypeUserCloseBtn.addEventListener('click', () => {closePopup(popupTypeUser)});
 
 
 // Редактировать профиль и отправить форму
 
-function formSubmitHandler (evt) {
+function editUserForm(evt) {
     evt.preventDefault();
     profileUserName.textContent = nameInput.value;
     profileUserInterest.textContent = jobInput.value;
 
-    closePopupEditForm();
+    closePopup(popupTypeUser);
 }
 
-formElementTypeUser.addEventListener('submit', formSubmitHandler);
+formElementTypeUser.addEventListener('submit', editUserForm);
 
 
 // Вывод карточек на страницу
