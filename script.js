@@ -7,16 +7,16 @@ const formElementTypePlace = document.querySelector('.popup__container_type_plac
 
 // Переменные для редактирования профиля
 const popupEditBtn = document.querySelector('.profile__edit-btn');
-let profileUserName = document.querySelector('.profile__user-name');
-let profileUserInterest = document.querySelector('.profile__user-interest');
-let nameInput = formElementTypeUser.querySelector('.popup__user_type_name');
-let jobInput = formElementTypeUser.querySelector('.popup__user_type_interest');
+const profileUserName = document.querySelector('.profile__user-name');
+const profileUserInterest = document.querySelector('.profile__user-interest');
+const nameInput = formElementTypeUser.querySelector('.popup__user_type_name');
+const jobInput = formElementTypeUser.querySelector('.popup__user_type_interest');
 
 // Переменные для добавление карточки
 const cardsSection = document.querySelector('.cards');
 const popupAddBtn = document.querySelector('.profile__add-btn');
-let placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
-let placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
+const placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
+const placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
 
 const initialCards = [
     {
