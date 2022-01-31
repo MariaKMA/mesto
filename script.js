@@ -6,15 +6,15 @@ const formElementTypeUser = document.querySelector('.popup__container_type_user'
 const formElementTypePlace = document.querySelector('.popup__container_type_place');
 
 // Переменные для редактирования профиля
-const popupEditBtn = document.querySelector('.profile__edit-btn');
+const profileEditBtn = document.querySelector('.profile__edit-btn');
 const profileUserName = document.querySelector('.profile__user-name');
 const profileUserInterest = document.querySelector('.profile__user-interest');
-const nameInput = formElementTypeUser.querySelector('.popup__user_type_name');
-const jobInput = formElementTypeUser.querySelector('.popup__user_type_interest');
+const inputUserName = formElementTypeUser.querySelector('.popup__user_type_name');
+const inputUserInterest = formElementTypeUser.querySelector('.popup__user_type_interest');
 
 // Переменные для добавление карточки
 const cardsSection = document.querySelector('.cards');
-const popupAddBtn = document.querySelector('.profile__add-btn');
+const profileAddBtn = document.querySelector('.profile__add-btn');
 const placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
 const placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
 
@@ -56,12 +56,12 @@ function closePopup(popup) {
 
 // Попап редактирования пользователя
 
-popupEditBtn.addEventListener('click', openPopupEditForm);
+profileEditBtn.addEventListener('click', openPopupEditForm);
 
 function openPopupEditForm() {
     openPopup(popupTypeUser);
-    nameInput.value = profileUserName.textContent;
-    jobInput.value = profileUserInterest.textContent;
+    inputUserName.value = profileUserName.textContent;
+    inputUserInterest.value = profileUserInterest.textContent;
 }
 
 popupTypeUserCloseBtn.addEventListener('click', () => {closePopup(popupTypeUser)});
@@ -71,8 +71,8 @@ popupTypeUserCloseBtn.addEventListener('click', () => {closePopup(popupTypeUser)
 
 function editUserForm(evt) {
     evt.preventDefault();
-    profileUserName.textContent = nameInput.value;
-    profileUserInterest.textContent = jobInput.value;
+    profileUserName.textContent = inputUserName.value;
+    profileUserInterest.textContent = inputUserInterest.value;
 
     closePopup(popupTypeUser);
 }
@@ -98,9 +98,9 @@ initialCards.forEach(item => {
 
 // Открыть попап добавления новой карточки
 
-popupAddBtn.addEventListener('click', openPopupAddPlace);
+profileAddBtn.addEventListener('click', openPopupAddCard);
 
-function openPopupAddPlace() {
+function openPopupAddCard() {
     popupTypePlace.classList.add('popup_active');
     placeCaptionInput.value = '';
     placeLinkInput.value = '';
@@ -109,9 +109,9 @@ function openPopupAddPlace() {
 
 // Закрыть попап добавления новой карточки
 
-popupTypePlaceCloseBtn.addEventListener('click', closePopupAddPlace);
+popupTypePlaceCloseBtn.addEventListener('click', closePopupAddCard);
 
-function closePopupAddPlace() {
+function closePopupAddCard() {
     popupTypePlace.classList.remove('popup_active');
 }
 
@@ -127,7 +127,7 @@ function addCardHandler (evt) {
     cardElement.querySelector('.card__caption').textContent = placeCaptionInput.value;
     cardsSection.prepend(cardElement);
 
-    closePopupAddPlace();
+    closePopupAddCard();
 
     // навесить новой карточке события клика по иконке like и иконке trash
     likeCard(cardElement);
