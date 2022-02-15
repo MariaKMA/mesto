@@ -46,16 +46,42 @@ const initialCards = [
     }
 ];
 
+// Открыть попап
 
 function openPopup(popup) {
     popup.classList.add('popup_active');
 }
 
+// Закрыть попап
+
 function closePopup(popup) {
     popup.classList.remove('popup_active');
 }
 
-// Попап редактирования пользователя
+// Закрыть попап по нажатию на esc
+
+function closePopupEsc(evt) {
+    if (evt.key === 'Escape') {
+        const popup = document.querySelector('.popup_active');
+        closePopup(popup);
+    }
+}
+
+// Закрыть попап по нажатию на overlay
+
+function closePopupOverlay(evt) {
+    if (evt.target.classList.contains('popup_active')) {
+        closePopup(evt.target);
+    }
+}
+
+// Обработчики событий - закрыть попап нажатием на Esc или на темный фон
+
+document.addEventListener('keydown', closePopupEsc);
+document.addEventListener('click', closePopupOverlay);
+
+
+// Открыть и провалидировать попап редактирования пользователя
 
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
@@ -63,7 +89,11 @@ function openPopupEditForm() {
     openPopup(popupTypeUser);
     inputUserName.value = profileUserName.textContent;
     inputUserInterest.value = profileUserInterest.textContent;
+    enableValidation(formsValidationConfig);
 }
+
+
+// Закрыть попап редактирования пользователя при нажатии на крестик
 
 popupTypeUserCloseBtn.addEventListener('click', () => {closePopup(popupTypeUser)});
 
@@ -74,7 +104,6 @@ function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     profileUserName.textContent = inputUserName.value;
     profileUserInterest.textContent = inputUserInterest.value;
-
     closePopup(popupTypeUser);
 }
 
@@ -137,7 +166,7 @@ initialCards.forEach(item => {
 })
 
 
-// Открыть попап добавления новой карточки
+// Открыть попап добавления новой карточки и провалидировать форму
 
 profileAddBtn.addEventListener('click', openPopupAddCard);
 
@@ -145,6 +174,7 @@ function openPopupAddCard() {
     openPopup(popupTypePlace);
     formElementTypePlace.querySelector('.popup__place_type_title').value = '';
     formElementTypePlace.querySelector('.popup__place_type_link').value = '';
+    enableValidation(formsValidationConfig);
 }
 
 

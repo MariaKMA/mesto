@@ -37,20 +37,30 @@
     </footer>
 
     <article class="popup popup_type_user">
-        <form class="popup__container popup__container_type_user" name="profileForm">
+        <form class="popup__container popup__container_type_user popup__form" name="profileForm" novalidate>
             <h2 class="popup__header">Редактировать профиль</h2>
-            <input type="text" name="userName" class="popup__input popup__user popup__user_type_name">
-            <input type="text" name="userInterest" class="popup__input popup__user popup__user_type_interest">
+
+            <input id="userName-input" type="text" name="userName" class="popup__input popup__user popup__user_type_name" required minlength='2' maxlength='40'>
+            <span class="userName-input-error popup__error"></span>
+
+            <input id="userInterest-input" type="text" name="userInterest" class="popup__input popup__user popup__user_type_interest" required minlength='2' maxlength='200'>
+            <span class="userInterest-input-error popup__error"></span>
+
             <button type="submit" class="popup__save-btn">Сохранить</button>
             <button type="button" class="popup__close-btn popup__close-btn_type_user" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
     </article>
 
     <article class="popup popup_type_place">
-        <form class="popup__container popup__container_type_place" name="profileForm">
+        <form class="popup__container popup__container_type_place  popup__form" name="profileForm" novalidate>
             <h2 class="popup__header">Новое место</h2>
-            <input type="text" name="placeTitle" placeholder="Название" class="popup__input popup__place popup__place_type_title">
-            <input type="text" name="imageLink" placeholder="Ссылка на картинку" class="popup__input popup__place popup__place_type_link">
+
+            <input id="placeTitle-input" type="text" name="placeTitle" placeholder="Название" class="popup__input popup__place popup__place_type_title" required minlength="2" maxlength="30">
+            <span class="placeTitle-input-error popup__error"></span>
+
+            <input id="placeLink-input" type="url" name="imageLink" placeholder="Ссылка на картинку" class="popup__input popup__place popup__place_type_link" required>
+            <span class="placeLink-input-error popup__error"></span>
+
             <button type="submit" class="popup__save-btn">Создать</button>
             <button type="button" class="popup__close-btn popup__close-btn_type_place" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
@@ -76,6 +86,7 @@
     </template>
 
     <script src="./script.js"></script>
+    <script src="./validate.js"></script>
 
 </body>
 </html>
