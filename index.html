@@ -36,7 +36,7 @@
         <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
 
-    <article class="popup popup_type_user">
+    <div class="popup popup_type_user">
         <form class="popup__container popup__container_type_user popup__form" name="profileForm" novalidate>
             <h2 class="popup__header">Редактировать профиль</h2>
 
@@ -49,9 +49,9 @@
             <button type="submit" class="popup__save-btn">Сохранить</button>
             <button type="button" class="popup__close-btn popup__close-btn_type_user" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
-    </article>
+    </div>
 
-    <article class="popup popup_type_place">
+    <div class="popup popup_type_place">
         <form class="popup__container popup__container_type_place  popup__form" name="profileForm" novalidate>
             <h2 class="popup__header">Новое место</h2>
 
@@ -64,25 +64,25 @@
             <button type="submit" class="popup__save-btn">Создать</button>
             <button type="button" class="popup__close-btn popup__close-btn_type_place" aria-label="Закрыть форму редактирования профиля"></button>
         </form>
-    </article>
+    </div>
 
-    <article class="popup popup_type_view-pic">
+    <div class="popup popup_type_view-pic">
         <div class="popup__container popup__container_type_view-pic">
             <img class="popup__image">
             <h2 class="popup__header popup__header_type_view-pic"></h2>
             <button type="button" class="popup__close-btn popup__close-btn_type_view-pic"></button>
         </div>
-    </article>
+    </div>
 
     <template id="card">
-        <article class="card">
+        <div class="card">
             <img class="card__img">
             <div class="card__label">
                 <h2 class="card__caption"></h2>
                 <button type="button" aria-label="Иконка like" class="card__like-icon"></button>
             </div>
             <button type="button" aria-label="Удалить карточку" class="card__trash-icon"></button>
-        </article>
+        </div>
     </template>
 
     <script src="./script.js"></script>
