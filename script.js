@@ -50,12 +50,14 @@ const initialCards = [
 
 function openPopup(popup) {
     popup.classList.add('popup_active');
+    document.addEventListener('keydown', closePopupEsc);
 }
 
 // Закрыть попап
 
 function closePopup(popup) {
     popup.classList.remove('popup_active');
+    document.removeEventListener('keydown', closePopupEsc);
 }
 
 // Закрыть попап по нажатию на esc
@@ -75,9 +77,8 @@ function closePopupOverlay(evt) {
     }
 }
 
-// Обработчики событий - закрыть попап нажатием на Esc или на темный фон
+// Обработчики событий - закрыть попап нажатием на темный фон
 
-document.addEventListener('keydown', closePopupEsc);
 document.addEventListener('click', closePopupOverlay);
 
 
