@@ -157,6 +157,15 @@ function openPopupAddCard() {
 popupTypePlaceCloseBtn.addEventListener('click', () => {closePopup(popupTypePlace);});
 
 
+// Деактивировать кнопку submit для предотвращения добавления пустой карточки
+
+function disableAddCardSubmit(evt) {
+    const button = evt.target.querySelector('.popup__save-btn');
+    button.disabled = true;
+    button.classList.add('popup__save-btn_invalid');
+}
+
+
 //  Добавить на страницу новую карточку
 
 function handleAddFormSubmit(evt) {
@@ -168,6 +177,8 @@ function handleAddFormSubmit(evt) {
 
     placeCaptionInput.value = '';
     placeLinkInput.value = '';
+
+    disableAddCardSubmit(evt);
 
     closePopup(popupTypePlace);
 }
