@@ -148,8 +148,7 @@ profileAddBtn.addEventListener('click', openPopupAddCard);
 
 function openPopupAddCard() {
     openPopup(popupTypePlace);
-    formElementTypePlace.querySelector('.popup__place_type_title').value = '';
-    formElementTypePlace.querySelector('.popup__place_type_link').value = '';
+    formElementTypePlace.reset();
 }
 
 
