@@ -33,6 +33,7 @@ const profileAddBtn = document.querySelector('.profile__add-btn');
 function openPopup(popup) {
     popup.classList.add('popup_active');
     document.addEventListener('keydown', closePopupEsc);
+    document.addEventListener('click', closePopupOverlay);
 }
 
 // Закрыть попап
@@ -40,6 +41,7 @@ function openPopup(popup) {
 function closePopup(popup) {
     popup.classList.remove('popup_active');
     document.removeEventListener('keydown', closePopupEsc);
+    document.removeEventListener('click', closePopupOverlay);
 }
 
 // Закрыть попап по нажатию на esc
@@ -61,7 +63,6 @@ function closePopupOverlay(evt) {
 
 // Обработчики событий - закрыть попап нажатием на темный фон
 
-document.addEventListener('click', closePopupOverlay);
 
 
 // Открыть и провалидировать попап редактирования пользователя
