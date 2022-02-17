@@ -61,10 +61,6 @@ function closePopupOverlay(evt) {
     }
 }
 
-// Обработчики событий - закрыть попап нажатием на темный фон
-
-
-
 // Открыть и провалидировать попап редактирования пользователя
 
 profileEditBtn.addEventListener('click', openPopupEditForm);
@@ -73,7 +69,6 @@ function openPopupEditForm() {
     openPopup(popupTypeUser);
     inputUserName.value = profileUserName.textContent;
     inputUserInterest.value = profileUserInterest.textContent;
-    enableValidation(formsValidationConfig);
 }
 
 
@@ -155,7 +150,6 @@ function openPopupAddCard() {
     openPopup(popupTypePlace);
     formElementTypePlace.querySelector('.popup__place_type_title').value = '';
     formElementTypePlace.querySelector('.popup__place_type_link').value = '';
-    enableValidation(formsValidationConfig);
 }
 
 

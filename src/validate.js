@@ -76,3 +76,5 @@ function checkInputValidity(formElement, inputElement, config) {
         hideInputError(formElement, inputElement, config);
     }
 }
+
+enableValidation(formsValidationConfig);
