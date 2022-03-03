@@ -89,58 +89,77 @@ function handleProfileFormSubmit(evt) {
 formElementTypeUser.addEventListener('submit', handleProfileFormSubmit);
 
 
-// Лайкнуть картинку
+class Card {
 
-function likeCard(cardElement) {
-    const likeIcon = cardElement.querySelector('.card__like-icon');
-    likeIcon.addEventListener('click', () => likeIcon.classList.toggle('card__like-icon_active'));
-}
+    constructor(link, name, cardSelector) {
+        this._link = link;
+        this._name = name;
+        this._cardSelector = cardSelector;
+    }
 
-// Удалить картинку
+    _getTemplate() {
+        const cardElement = document
+          .querySelector(this._cardSelector)
+          .content
+          .querySelector('.card')
+          .cloneNode(true);
 
-function deleteCard(cardElement) {
-    const trashIcon = cardElement.querySelector('.card__trash-icon');
-    trashIcon.addEventListener('click', () => trashIcon.closest('.card').remove());
-}
+        return cardElement;
+    }
 
-// Посмотреть картинку
+    generate() {
+        this._card = this._getTemplate();
+        this._setEventListeners();
 
-function viewPicture(cardElement, cardImage) {
-    const cardCaption = cardElement.querySelector('.card__caption');
-    cardImage.addEventListener('click', () => {
+        this._card.querySelector('.card__img').src = this._link;
+        this._card.querySelector('.card__img').alt = this._name;
+        this._card.querySelector('.card__caption').textContent = this._name;
+
+        return this._card;
+    }
+
+    _setEventListeners() {
+
+        // Лайкнуть карточку
+        this._card.querySelector('.card__like-icon').addEventListener('click', () => {
+          this._likeIconClick();
+        });
+
+        // Удалить карточку
+        this._card.querySelector('.card__trash-icon').addEventListener('click', () => {
+           this._deleteCardClick();
+        })
+
+        // Посмотреть картинку
+        this._card.querySelector('.card__img').addEventListener('click', () => {
+            this._viewPicture();
+        })
+    }
+
+    _likeIconClick() {
+        this._card.querySelector('.card__like-icon').classList.toggle('card__like-icon_active');
+    }
+
+    _deleteCardClick() {
+        this._card.querySelector('.card__trash-icon').closest('.card').remove();
+    }
+
+    _viewPicture() {
         openPopup(popupViewPic);
-        popupViewPicImg.src = cardImage.src;
-        popupViewPicImg.alt = cardImage.alt;
-        popupViewPicCaption.textContent = cardCaption.textContent;
-    });
-}
-
-
-// Создать карточку
-
-function createCard(link, name) {
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-    const cardImage = cardElement.querySelector('.card__img');
-    cardImage.src = link;
-    cardImage.alt = name;
-    cardElement.querySelector('.card__caption').textContent = name;
-
-    // обработчики событий клика по иконке like, иконке trash и самой карточке
-    likeCard(cardElement);
-    deleteCard(cardElement);
-    viewPicture(cardElement, cardImage);
-
-    return cardElement;
+        popupViewPicImg.src = this._card.querySelector('.card__img').src;
+        popupViewPicImg.alt = this._card.querySelector('.card__img').alt;
+        popupViewPicCaption.textContent = this._card.querySelector('.card__caption').textContent;
+    }
 }
 
 
 // Вывести карточки на страницу по данным из массива
 
 initialCards.forEach(item => {
-    const card = createCard(item.link, item.name);
-    cardsSection.append(card);
+    const card = new Card(item.link, item.name, '.card-template');
+    const cardElement = card.generate();
+    cardsSection.append(cardElement);
 })
-
 
 // Открыть попап добавления новой карточки и провалидировать форму
 
@@ -171,9 +190,10 @@ function disableAddCardSubmit(evt) {
 function handleAddFormSubmit(evt) {
     evt.preventDefault();
 
-    const card = createCard(placeLinkInput.value, placeCaptionInput.value);
+    const card = new Card(placeLinkInput.value, placeCaptionInput.value, '.card-template');
+    const cardElement = card.generate();
 
-    cardsSection.prepend(card);
+    cardsSection.prepend(cardElement);
 
     placeCaptionInput.value = '';
     placeLinkInput.value = '';
