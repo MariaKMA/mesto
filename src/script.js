@@ -61,7 +61,7 @@ function closePopupOverlay(evt) {
     }
 }
 
-// Открыть и провалидировать попап редактирования пользователя
+// Открыть попап редактирования пользователя
 
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
@@ -209,3 +209,18 @@ formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
 // Закрыть попап с картинкой
 
 popupViewPicCloseBtn.addEventListener('click', () => {closePopup(popupViewPic)});
+
+
+const config = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    errorInputClass: 'popup__input_type_error',
+    errorClass: 'popup__error_active',
+    submitButtonSelector: '.popup__save-btn',
+    submitButtonErrorClass: 'popup__save-btn_invalid'
+}
+const forms = Array.from(document.querySelectorAll('.popup__form'));
+forms.forEach(form => {
+    const validator = new FormValidator(config, form);
+    validator.enableValidation();
+})
