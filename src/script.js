@@ -1,31 +1,41 @@
-const cardTemplate = document.querySelector('#card').content;
+// const cardTemplate = document.querySelector('#card').content;
 
-const popupTypeUser = document.querySelector('.popup_type_user');
-const popupTypePlace = document.querySelector('.popup_type_place');
-const popupViewPic = document.querySelector('.popup_type_view-pic');
+// const popupTypeUser = document.querySelector('.popup_type_user');
+// const popupTypePlace = document.querySelector('.popup_type_place');
+// const popupViewPic = document.querySelector('.popup_type_view-pic');
 
-const popupTypeUserCloseBtn = document.querySelector('.popup__close-btn_type_user');
-const popupTypePlaceCloseBtn = document.querySelector('.popup__close-btn_type_place');
-const popupViewPicCloseBtn = popupViewPic.querySelector('.popup__close-btn_type_view-pic');
-const popupViewPicImg = document.querySelector('.popup__image');
-const popupViewPicCaption = document.querySelector('.popup__header_type_view-pic');
+// const popupTypeUserCloseBtn = document.querySelector('.popup__close-btn_type_user');
+// const popupTypePlaceCloseBtn = document.querySelector('.popup__close-btn_type_place');
+// const popupViewPicCloseBtn = popupViewPic.querySelector('.popup__close-btn_type_view-pic');
+// const popupViewPicImg = document.querySelector('.popup__image');
+// const popupViewPicCaption = document.querySelector('.popup__header_type_view-pic');
 
-const formElementTypeUser = document.querySelector('.popup__container_type_user');
-const formElementTypePlace = document.querySelector('.popup__container_type_place');
+// const formElementTypeUser = document.querySelector('.popup__container_type_user');
+// const formElementTypePlace = document.querySelector('.popup__container_type_place');
 
-const placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
-const placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
+// const placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
+// const placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
 
-// Переменные для редактирования профиля
-const profileEditBtn = document.querySelector('.profile__edit-btn');
-const profileUserName = document.querySelector('.profile__user-name');
-const profileUserInterest = document.querySelector('.profile__user-interest');
-const inputUserName = formElementTypeUser.querySelector('.popup__user_type_name');
-const inputUserInterest = formElementTypeUser.querySelector('.popup__user_type_interest');
+// // Переменные для редактирования профиля
+// const profileEditBtn = document.querySelector('.profile__edit-btn');
+// const profileUserName = document.querySelector('.profile__user-name');
+// const profileUserInterest = document.querySelector('.profile__user-interest');
+// const inputUserName = formElementTypeUser.querySelector('.popup__user_type_name');
+// const inputUserInterest = formElementTypeUser.querySelector('.popup__user_type_interest');
 
-// Переменные для добавление карточки
-const cardsSection = document.querySelector('.cards');
-const profileAddBtn = document.querySelector('.profile__add-btn');
+// // Переменные для добавление карточки
+// const cardsSection = document.querySelector('.cards');
+// const profileAddBtn = document.querySelector('.profile__add-btn');
+
+// const config = {
+//     formSelector: '.popup__form',
+//     inputSelector: '.popup__input',
+//     errorInputClass: 'popup__input_type_error',
+//     errorClass: 'popup__error_active',
+//     submitButtonSelector: '.popup__save-btn',
+//     submitButtonErrorClass: 'popup__save-btn_invalid'
+// }
+// const forms = Array.from(document.querySelectorAll('.popup__form'));
 
 
 // Открыть попап
@@ -89,70 +99,6 @@ function handleProfileFormSubmit(evt) {
 formElementTypeUser.addEventListener('submit', handleProfileFormSubmit);
 
 
-class Card {
-
-    constructor(link, name, cardSelector) {
-        this._link = link;
-        this._name = name;
-        this._cardSelector = cardSelector;
-    }
-
-    _getTemplate() {
-        const cardElement = document
-          .querySelector(this._cardSelector)
-          .content
-          .querySelector('.card')
-          .cloneNode(true);
-
-        return cardElement;
-    }
-
-    generate() {
-        this._card = this._getTemplate();
-        this._setEventListeners();
-
-        this._card.querySelector('.card__img').src = this._link;
-        this._card.querySelector('.card__img').alt = this._name;
-        this._card.querySelector('.card__caption').textContent = this._name;
-
-        return this._card;
-    }
-
-    _setEventListeners() {
-
-        // Лайкнуть карточку
-        this._card.querySelector('.card__like-icon').addEventListener('click', () => {
-          this._likeIconClick();
-        });
-
-        // Удалить карточку
-        this._card.querySelector('.card__trash-icon').addEventListener('click', () => {
-           this._deleteCardClick();
-        })
-
-        // Посмотреть картинку
-        this._card.querySelector('.card__img').addEventListener('click', () => {
-            this._viewPicture();
-        })
-    }
-
-    _likeIconClick() {
-        this._card.querySelector('.card__like-icon').classList.toggle('card__like-icon_active');
-    }
-
-    _deleteCardClick() {
-        this._card.querySelector('.card__trash-icon').closest('.card').remove();
-    }
-
-    _viewPicture() {
-        openPopup(popupViewPic);
-        popupViewPicImg.src = this._card.querySelector('.card__img').src;
-        popupViewPicImg.alt = this._card.querySelector('.card__img').alt;
-        popupViewPicCaption.textContent = this._card.querySelector('.card__caption').textContent;
-    }
-}
-
-
 // Вывести карточки на страницу по данным из массива
 
 initialCards.forEach(item => {
@@ -204,16 +150,6 @@ formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
 
 popupViewPicCloseBtn.addEventListener('click', () => {closePopup(popupViewPic)});
 
-
-const config = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    errorInputClass: 'popup__input_type_error',
-    errorClass: 'popup__error_active',
-    submitButtonSelector: '.popup__save-btn',
-    submitButtonErrorClass: 'popup__save-btn_invalid'
-}
-const forms = Array.from(document.querySelectorAll('.popup__form'));
 
 forms.forEach(form => {
     const validator = new FormValidator(config, form);
