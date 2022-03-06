@@ -168,21 +168,16 @@ profileAddBtn.addEventListener('click', openPopupAddCard);
 function openPopupAddCard() {
     openPopup(popupTypePlace);
     formElementTypePlace.reset();
+
+    // Деактивировать кнопку сабмита при открытии формы
+    const addCardValidator = new FormValidator(config, formElementTypePlace);
+    addCardValidator.disableAddCardSubmit();
 }
 
 
 // Закрыть попап добавления новой карточки
 
 popupTypePlaceCloseBtn.addEventListener('click', () => {closePopup(popupTypePlace);});
-
-
-// Деактивировать кнопку submit для предотвращения добавления пустой карточки
-
-function disableAddCardSubmit(evt) {
-    const button = evt.target.querySelector('.popup__save-btn');
-    button.disabled = true;
-    button.classList.add('popup__save-btn_invalid');
-}
 
 
 //  Добавить на страницу новую карточку
@@ -198,12 +193,11 @@ function handleAddFormSubmit(evt) {
     placeCaptionInput.value = '';
     placeLinkInput.value = '';
 
-    disableAddCardSubmit(evt);
-
     closePopup(popupTypePlace);
 }
 
 formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
+
 
 
 // Закрыть попап с картинкой
@@ -220,7 +214,9 @@ const config = {
     submitButtonErrorClass: 'popup__save-btn_invalid'
 }
 const forms = Array.from(document.querySelectorAll('.popup__form'));
+
 forms.forEach(form => {
     const validator = new FormValidator(config, form);
     validator.enableValidation();
 })
+

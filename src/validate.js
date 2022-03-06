@@ -12,11 +12,11 @@ class FormValidator {
         evt.preventDefault();
     }
 
-    _showInputError(inputElement) {
+    _showInputError(inputElement, errorMessage) {
         const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
         errorElement.classList.add(this._config.errorClass);
         inputElement.classList.add(this._config.errorInputClass);
-        errorElement.textContent = inputElement.validationMessage;
+        errorElement.textContent = errorMessage;
     }
 
     _hideInputError(inputElement) {
@@ -31,9 +31,15 @@ class FormValidator {
         this._button.classList.toggle(this._config.submitButtonErrorClass, !this._formElement.checkValidity());
     }
 
+    disableAddCardSubmit() {
+        const button = this._formElement.querySelector('.popup__save-btn');
+        button.disabled = true;
+        button.classList.add('popup__save-btn_invalid');
+    }
+
     _checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
-            this._showInputError(inputElement);
+            this._showInputError(inputElement, inputElement.validationMessage);
         }
         else {
             this._hideInputError(inputElement);
