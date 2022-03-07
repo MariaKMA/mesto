@@ -1,4 +1,4 @@
-import {closePopup, closePopupEsc, closePopupOverlay} from "./closePopup.js";
+import {closePopupEsc, closePopupOverlay} from "./closePopup.js";
 
 // Открыть попап
 

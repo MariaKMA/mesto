@@ -7,7 +7,6 @@ export default class Card {
         this._link = link;
         this._name = name;
         this._cardSelector = cardSelector;
-        // this._onView = onView;
     }
 
     _getTemplate() {
