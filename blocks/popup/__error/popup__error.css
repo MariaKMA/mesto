@@ -5,10 +5,6 @@
     min-height: 30px;
     font-weight: 400;
     line-height: 15px;
-
-    /* Убрала отступ текста ошибки от поля ввода, чтобы влезло 2 строки текста ошибки при соблюдении
-    остальных требований макета */
-    /* margin-top: 5px; */
-
+    margin-top: 5px;
     visibility: hidden;
 }
