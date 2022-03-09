@@ -21,10 +21,11 @@ export default class Card {
 
     generate() {
         this._card = this._getTemplate();
+        this._cardImage = this._card.querySelector('.card__img');
         this._setEventListeners();
 
-        this._card.querySelector('.card__img').src = this._link;
-        this._card.querySelector('.card__img').alt = this._name;
+        this._cardImage.src = this._link;
+        this._cardImage.alt = this._name;
         this._card.querySelector('.card__caption').textContent = this._name;
 
         return this._card;
@@ -43,7 +44,7 @@ export default class Card {
         })
 
         // Посмотреть картинку
-        this._card.querySelector('.card__img').addEventListener('click', () => {
+        this._cardImage.addEventListener('click', () => {
             this._viewPicture();
         })
     }
@@ -58,8 +59,8 @@ export default class Card {
 
     _viewPicture() {
         openPopup(popupViewPic);
-        popupViewPicImg.src = this._card.querySelector('.card__img').src;
-        popupViewPicImg.alt = this._card.querySelector('.card__img').alt;
+        popupViewPicImg.src = this._cardImage.src;
+        popupViewPicImg.alt = this._cardImage.alt;
         popupViewPicCaption.textContent = this._card.querySelector('.card__caption').textContent;
     }
 }
