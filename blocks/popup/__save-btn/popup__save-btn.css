@@ -1,5 +1,5 @@
 .popup__save-btn {
-    margin-top: 19px;
+    margin-top: 14px;
     width: 100%;
     min-height: 50px;
     color: #fff;
@@ -23,7 +23,7 @@
     .popup__save-btn {
         font-size: 14px;
         line-height: 17px;
-        margin-top: 45px;
+        margin-top: 10px;
         min-height: 46px;
     }
 
