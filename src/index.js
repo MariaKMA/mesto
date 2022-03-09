@@ -58,7 +58,7 @@ function openPopupAddCard() {
 
     // Деактивировать кнопку сабмита при открытии формы
     const addCardValidator = new FormValidator(config, formElementTypePlace);
-    addCardValidator.disableAddCardSubmit();
+    addCardValidator.setSubmitButtonState();
 }
 
 

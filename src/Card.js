@@ -22,11 +22,17 @@ export default class Card {
     generate() {
         this._card = this._getTemplate();
         this._cardImage = this._card.querySelector('.card__img');
+        this._likeIcon = this._card.querySelector('.card__like-icon');
+        this._trashIcon = this._card.querySelector('.card__trash-icon');
+        this._cardCaption = this._card.querySelector('.card__caption');
+
+
+
         this._setEventListeners();
 
         this._cardImage.src = this._link;
         this._cardImage.alt = this._name;
-        this._card.querySelector('.card__caption').textContent = this._name;
+        this._cardCaption.textContent = this._name;
 
         return this._card;
     }
@@ -34,12 +40,12 @@ export default class Card {
     _setEventListeners() {
 
         // Лайкнуть карточку
-        this._card.querySelector('.card__like-icon').addEventListener('click', () => {
+        this._likeIcon.addEventListener('click', () => {
           this._likeIconClick();
         });
 
         // Удалить карточку
-        this._card.querySelector('.card__trash-icon').addEventListener('click', () => {
+        this._trashIcon.addEventListener('click', () => {
            this._deleteCardClick();
         })
 
@@ -50,17 +56,19 @@ export default class Card {
     }
 
     _likeIconClick() {
-        this._card.querySelector('.card__like-icon').classList.toggle('card__like-icon_active');
+        this._likeIcon.classList.toggle('card__like-icon_active');
     }
 
     _deleteCardClick() {
-        this._card.querySelector('.card__trash-icon').closest('.card').remove();
+        this._card.remove();
+        this._card = null;
     }
 
     _viewPicture() {
+        popupViewPicImg.src = this._link;
+        popupViewPicImg.alt = this._name;
+        popupViewPicCaption.textContent = this._name;
+
         openPopup(popupViewPic);
-        popupViewPicImg.src = this._cardImage.src;
-        popupViewPicImg.alt = this._cardImage.alt;
-        popupViewPicCaption.textContent = this._card.querySelector('.card__caption').textContent;
     }
 }

@@ -24,15 +24,9 @@ export default class FormValidator {
         errorElement.textContent = '';
     }
 
-    _setSubmitButtonState() {
+    setSubmitButtonState() {
         this._button.disabled = !this._formElement.checkValidity();
         this._button.classList.toggle(this._config.submitButtonErrorClass, !this._formElement.checkValidity());
-    }
-
-    disableAddCardSubmit() {
-        const button = this._formElement.querySelector('.popup__save-btn');
-        button.disabled = true;
-        button.classList.add('popup__save-btn_invalid');
     }
 
     _checkInputValidity(inputElement) {
@@ -51,7 +45,7 @@ export default class FormValidator {
         this._inputs.forEach(inputElement =>
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._setSubmitButtonState();
+                this.setSubmitButtonState();
             })
         );
     }
