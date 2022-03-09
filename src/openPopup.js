@@ -4,6 +4,6 @@ import {closePopupEsc, closePopupOverlay} from "./closePopup.js";
 
 export function openPopup(popup) {
     popup.classList.add('popup_active');
-    document.addEventListener('keydown', closePopupEsc);
-    document.addEventListener('click', closePopupOverlay);
+    popup.addEventListener('keydown', closePopupEsc);
+    popup.addEventListener('click', closePopupOverlay);
 }

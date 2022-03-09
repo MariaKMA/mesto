@@ -2,8 +2,8 @@
 
 export function closePopup(popup) {
     popup.classList.remove('popup_active');
-    document.removeEventListener('keydown', closePopupEsc);
-    document.removeEventListener('click', closePopupOverlay);
+    popup.removeEventListener('keydown', closePopupEsc);
+    popup.removeEventListener('click', closePopupOverlay);
 }
 
 // Закрыть попап по нажатию на esc
