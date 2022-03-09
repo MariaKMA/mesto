@@ -7,3 +7,9 @@
     padding: 0;
     box-shadow: none;
 }
+
+@media screen and (max-width: 530px) {
+    .popup__container_type_view-pic {
+        min-width: 240px;
+    }
+}
