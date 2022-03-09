@@ -2,7 +2,7 @@
 
 export function closePopup(popup) {
     popup.classList.remove('popup_active');
-    popup.removeEventListener('keydown', closePopupEsc);
+    document.removeEventListener('keydown', closePopupEsc);
     popup.removeEventListener('click', closePopupOverlay);
 }
 
