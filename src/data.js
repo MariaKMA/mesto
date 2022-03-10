@@ -25,8 +25,6 @@ export const initialCards = [
     }
 ];
 
-export const cardTemplate = document.querySelector('#card').content;
-
 export const popupTypeUser = document.querySelector('.popup_type_user');
 export const popupTypePlace = document.querySelector('.popup_type_place');
 export const popupViewPic = document.querySelector('.popup_type_view-pic');
