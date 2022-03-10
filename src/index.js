@@ -17,9 +17,9 @@ import {closePopup} from "./closePopup.js";
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
 function openPopupEditForm() {
-    openPopup(popupTypeUser);
     inputUserName.value = profileUserName.textContent;
     inputUserInterest.value = profileUserInterest.textContent;
+    openPopup(popupTypeUser);
 }
 
 
@@ -40,11 +40,18 @@ function handleProfileFormSubmit(evt) {
 formElementTypeUser.addEventListener('submit', handleProfileFormSubmit);
 
 
+// Создать разметку карточки
+
+function generateCard(link, name, selector) {
+    const card = new Card(link, name, selector);
+    const cardElement = card.generate();
+    return cardElement;
+}
+
 // Вывести карточки на страницу по данным из массива
 
 initialCards.forEach(item => {
-    const card = new Card(item.link, item.name, '.card-template');
-    const cardElement = card.generate();
+    const cardElement = generateCard(item.link, item.name, '.card-template');
     cardsSection.append(cardElement);
 })
 
@@ -72,15 +79,13 @@ popupTypePlaceCloseBtn.addEventListener('click', () => {closePopup(popupTypePlac
 function handleAddFormSubmit(evt) {
     evt.preventDefault();
 
-    const card = new Card(placeLinkInput.value, placeCaptionInput.value, '.card-template');
-    const cardElement = card.generate();
-
+    const cardElement = generateCard(placeLinkInput.value, placeCaptionInput.value, '.card-template');
     cardsSection.prepend(cardElement);
+
+    closePopup(popupTypePlace);
 
     placeCaptionInput.value = '';
     placeLinkInput.value = '';
-
-    closePopup(popupTypePlace);
 }
 
 formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
