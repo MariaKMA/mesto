@@ -55,6 +55,16 @@ initialCards.forEach(item => {
     cardsSection.append(cardElement);
 })
 
+
+// Запустить валидацию форм
+
+const validatorUserForm = new FormValidator(config, formElementTypeUser);
+validatorUserForm.enableValidation();
+
+const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
+validatorPlaceForm.enableValidation();
+
+
 // Открыть попап добавления новой карточки и провалидировать форму
 
 profileAddBtn.addEventListener('click', openPopupAddCard);
@@ -64,8 +74,7 @@ function openPopupAddCard() {
     formElementTypePlace.reset();
 
     // Деактивировать кнопку сабмита при открытии формы
-    const addCardValidator = new FormValidator(config, formElementTypePlace);
-    addCardValidator.setSubmitButtonState();
+    validatorPlaceForm.setSubmitButtonState();
 }
 
 
@@ -91,14 +100,9 @@ function handleAddFormSubmit(evt) {
 formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
 
 
-
 // Закрыть попап с картинкой
 
 popupViewPicCloseBtn.addEventListener('click', () => {closePopup(popupViewPic)});
 
 
-forms.forEach(form => {
-    const validator = new FormValidator(config, form);
-    validator.enableValidation();
-})
 
