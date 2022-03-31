@@ -1,5 +1,6 @@
-import {openPopup} from "./openPopup.js";
-import {popupViewPic, popupViewPicImg, popupViewPicCaption} from "./data.js";
+// import {openPopup} from "./openPopup.js";
+import PopupWithImage from "./PopupWithImage.js";
+// import {popupViewPic} from "./data.js";
 
 export default class Card {
 
@@ -65,10 +66,11 @@ export default class Card {
     }
 
     _viewPicture() {
-        popupViewPicImg.src = this._link;
-        popupViewPicImg.alt = this._name;
-        popupViewPicCaption.textContent = this._name;
+        // popupViewPicImg.src = this._link;
+        // popupViewPicImg.alt = this._name;
+        // popupViewPicCaption.textContent = this._name;
 
-        openPopup(popupViewPic);
+        const popupWithImage = new PopupWithImage(this._link, this._name, '.popup_type_view-pic');
+        popupWithImage.open();
     }
 }

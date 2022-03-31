@@ -9,46 +9,38 @@ import {initialCards, popupTypeUser, popupTypePlace,
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 import Card from "./Card.js";
-import {openPopup} from "./openPopup.js";
-import {closePopup} from "./closePopup.js";
+import Popup from './Popup.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
+import UserInfo from "./UserInfo.js";
 
 
-// Открыть попап редактирования пользователя
-
+// Слушатель клика по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
+// Экземпляр класса PopupWithForm - для формы редактирования профиля
+const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
+popupEditForm.setEventListeners();
+
+// Экземпляр класса UserInfo
+const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest'});
+
+
+// Открываем попап с формой редактирования профиля
 function openPopupEditForm() {
-    inputUserName.value = profileUserName.textContent;
-    inputUserInterest.value = profileUserInterest.textContent;
-    openPopup(popupTypeUser);
+    const userData = profileUserInfo.getUserInfo(); // получаем объект с данными пользователя, которые вставляем в открываемую форму
+    inputUserName.value = userData.userName;
+    inputUserInterest.value = userData.userInterest;
+    popupEditForm.open();
 }
 
-
-// Закрыть попап редактирования пользователя при нажатии на крестик
-
-popupTypeUserCloseBtn.addEventListener('click', () => {closePopup(popupTypeUser)});
-
-
-// Редактировать профиль и отправить форму
-
-function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-    profileUserName.textContent = inputUserName.value;
-    profileUserInterest.textContent = inputUserInterest.value;
-    closePopup(popupTypeUser);
+// Обработчик сабмита формы редактирования профиля
+function handleProfileFormSubmit(userData) {
+    profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
+    popupEditForm.close();
 }
 
-formElementTypeUser.addEventListener('submit', handleProfileFormSubmit);
-
-
-
-
-
-
-
-
-// Запустить валидацию форм
-
+// Запуск валидации форм
 const validatorUserForm = new FormValidator(config, formElementTypeUser);
 validatorUserForm.enableValidation();
 
@@ -56,57 +48,26 @@ const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
 validatorPlaceForm.enableValidation();
 
 
-// Открыть попап добавления новой карточки и провалидировать форму
+// Создаём экземпляр класса PopupWithForm - для формы добавления новой карточки
+const popupAddCard = new PopupWithForm('.popup_type_place', handleAddFormSubmit);
+popupAddCard.setEventListeners();
 
+// Слушатель клика по кнопке добавления новой карточки
 profileAddBtn.addEventListener('click', openPopupAddCard);
 
+// Открываем попап добавления новой карточки
 function openPopupAddCard() {
-    openPopup(popupTypePlace);
-    formElementTypePlace.reset();
-
-    // Деактивировать кнопку сабмита при открытии формы
-    validatorPlaceForm.setSubmitButtonState();
+    popupAddCard.open();
+    validatorPlaceForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
 
+// Функция-обработчик сабмита формы добавления новой карточки
+function handleAddFormSubmit() {
+    cardItem.renderItems(); // добавляем карточку на страницу
+    popupAddCard.close();
+}
 
-// Закрыть попап добавления новой карточки
-
-popupTypePlaceCloseBtn.addEventListener('click', () => {closePopup(popupTypePlace);});
-
-
-
-// Создать разметку карточки
-
-// function generateCard(link, name, selector) {
-//     const card = new Card(link, name, selector);
-//     const cardElement = card.generate();
-//     return cardElement;
-// }
-
-// // Вывести карточки на страницу по данным из массива
-
-// initialCards.forEach(item => {
-//     const cardElement = generateCard(item.link, item.name, '.card-template');
-//     cardsSection.append(cardElement);
-// })
-
-//  Добавить на страницу новую карточку
-
-// function handleAddFormSubmit(evt) {
-//     evt.preventDefault();
-
-//     const cardElement = generateCard(placeLinkInput.value, placeCaptionInput.value, '.card-template');
-//     cardsSection.prepend(cardElement);
-
-//     closePopup(popupTypePlace);
-
-//     placeCaptionInput.value = '';
-//     placeLinkInput.value = '';
-// }
-
-
-// formElementTypePlace.addEventListener('submit', handleAddFormSubmit);
-
+// Экземпляр класса Section для добавления карточек из массива
 const cardList = new Section({
     items: initialCards,
     renderer: (item) => {
@@ -119,6 +80,7 @@ const cardList = new Section({
 cardList.renderItems();
 
 
+// Экземпляр класса Section для добавления карточки с помощью формы
 const cardItem = new Section({
     items: [{}],
     renderer: () => {
@@ -128,13 +90,12 @@ const cardItem = new Section({
     }
 }, cardsSection);
 
-formElementTypePlace.addEventListener('submit', () => {cardItem.renderItems()});
 
-
-
-// Закрыть попап с картинкой
-
-popupViewPicCloseBtn.addEventListener('click', () => {closePopup(popupViewPic)});
+// Слушатель клика по кнопке закрытия попапа с картинкой
+popupViewPicCloseBtn.addEventListener('click', () => {
+    const popupTypeViewPic = new Popup('.popup_type_view-pic');
+    popupTypeViewPic.close()
+});
 
 
 
