@@ -1,4 +1,4 @@
-import {profileUserName, profileUserInterest} from './data.js';
+// import {profileUserName, profileUserInterest} from './data.js';
 
 export default class UserInfo {
     constructor({userNameSelector, userInterestSelector}) {

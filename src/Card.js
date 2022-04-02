@@ -1,13 +1,10 @@
-// import {openPopup} from "./openPopup.js";
-import PopupWithImage from "./PopupWithImage.js";
-// import {popupViewPic} from "./data.js";
-
 export default class Card {
 
-    constructor(link, name, cardSelector) {
+    constructor(link, name, cardSelector, handleCardClick) {
         this._link = link;
         this._name = name;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -26,8 +23,6 @@ export default class Card {
         this._likeIcon = this._card.querySelector('.card__like-icon');
         this._trashIcon = this._card.querySelector('.card__trash-icon');
         this._cardCaption = this._card.querySelector('.card__caption');
-
-
 
         this._setEventListeners();
 
@@ -52,7 +47,7 @@ export default class Card {
 
         // Посмотреть картинку
         this._cardImage.addEventListener('click', () => {
-            this._viewPicture();
+            this._handleCardClick(this._link, this._name);
         })
     }
 
@@ -63,14 +58,5 @@ export default class Card {
     _deleteCardClick() {
         this._card.remove();
         this._card = null;
-    }
-
-    _viewPicture() {
-        // popupViewPicImg.src = this._link;
-        // popupViewPicImg.alt = this._name;
-        // popupViewPicCaption.textContent = this._name;
-
-        const popupWithImage = new PopupWithImage(this._link, this._name, '.popup_type_view-pic');
-        popupWithImage.open();
     }
 }

@@ -1,9 +1,7 @@
-import {initialCards, popupTypeUser, popupTypePlace,
-    popupViewPic, popupTypeUserCloseBtn, popupTypePlaceCloseBtn,
+import {initialCards,
     popupViewPicCloseBtn, formElementTypeUser, formElementTypePlace,
-    placeCaptionInput, placeLinkInput, profileEditBtn, profileUserName,
-    profileUserInterest, inputUserName, inputUserInterest, cardsSection,
-    profileAddBtn, config, forms
+    placeCaptionInput, placeLinkInput, profileEditBtn, inputUserName, inputUserInterest, cardsSection,
+    profileAddBtn, config
 } from "./data.js";
 
 import FormValidator from "./FormValidator.js";
@@ -48,10 +46,6 @@ const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
 validatorPlaceForm.enableValidation();
 
 
-// Создаём экземпляр класса PopupWithForm - для формы добавления новой карточки
-const popupAddCard = new PopupWithForm('.popup_type_place', handleAddFormSubmit);
-popupAddCard.setEventListeners();
-
 // Слушатель клика по кнопке добавления новой карточки
 profileAddBtn.addEventListener('click', openPopupAddCard);
 
@@ -61,35 +55,46 @@ function openPopupAddCard() {
     validatorPlaceForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
 
+
+// Экземпляр класса Section для добавления карточек из массива
+const cardList = new Section({
+    items: initialCards,
+    renderer: (item) => {
+        const card = new Card(item.link, item.name, '.card-template', () => {
+            const popupWithImage = new PopupWithImage(item.link, item.name, '.popup_type_view-pic');
+            popupWithImage.open();
+            });
+        const cardElement = card.generate();
+        cardList.addAppendItem(cardElement);
+    }
+}, cardsSection);
+
+// Отрисовываем на странице карточки из массива
+cardList.renderItems();
+
+
+// Создаём экземпляр класса PopupWithForm - для формы добавления новой карточки
+const popupAddCard = new PopupWithForm('.popup_type_place', handleAddFormSubmit);
+popupAddCard.setEventListeners();
+
 // Функция-обработчик сабмита формы добавления новой карточки
 function handleAddFormSubmit() {
     cardItem.renderItems(); // добавляем карточку на страницу
     popupAddCard.close();
 }
 
-// Экземпляр класса Section для добавления карточек из массива
-const cardList = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const card = new Card(item.link, item.name, '.card-template');
-        const cardElement = card.generate();
-        cardList.addAppendItem(cardElement);
-    }
-}, cardsSection);
-
-cardList.renderItems();
-
-
 // Экземпляр класса Section для добавления карточки с помощью формы
 const cardItem = new Section({
     items: [{}],
     renderer: () => {
-        const card = new Card(placeLinkInput.value, placeCaptionInput.value, '.card-template');
+        const card = new Card(placeLinkInput.value, placeCaptionInput.value, '.card-template', (link, name) => {
+            const popupWithImage = new PopupWithImage(link, name, '.popup_type_view-pic');
+            popupWithImage.open();
+            });
         const cardElement = card.generate();
-        cardItem.addPrependItem(cardElement);
+        cardList.addPrependItem(cardElement);
     }
 }, cardsSection);
-
 
 // Слушатель клика по кнопке закрытия попапа с картинкой
 popupViewPicCloseBtn.addEventListener('click', () => {
