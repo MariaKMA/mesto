@@ -1,3 +1,5 @@
+import './index.css';
+
 import {initialCards,
     popupViewPicCloseBtn, formElementTypeUser, formElementTypePlace,
     placeCaptionInput, placeLinkInput, profileEditBtn, inputUserName, inputUserInterest, cardsSection,
