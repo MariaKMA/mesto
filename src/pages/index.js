@@ -4,15 +4,17 @@ import {initialCards,
     popupViewPicCloseBtn, formElementTypeUser, formElementTypePlace,
     placeCaptionInput, placeLinkInput, profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config
-} from "./data.js";
+} from "../data.js";
 
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import Card from "./Card.js";
-import Popup from './Popup.js';
-import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
-import UserInfo from "./UserInfo.js";
+// import FormValidator from "../FormValidator.js";
+import FormValidator from "../components/FormValidator";
+
+import Section from "../components/Section.js";
+import Card from "../components/Card.js";
+import Popup from '../components/Popup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import UserInfo from "../components/UserInfo.js";
 
 
 // Слушатель клика по кнопке редактирования профиля
