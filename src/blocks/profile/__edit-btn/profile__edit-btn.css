@@ -1,7 +1,7 @@
 .profile__edit-btn {
     width: 24px;
     height: 24px;
-    background-image: url(../../../src/images/editButton.svg);
+    background-image: url(../../../images/editButton.svg);
     background-size: 10px 10px;
     background-color: transparent;
     background-repeat: no-repeat;
