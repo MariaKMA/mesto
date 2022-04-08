@@ -17,9 +17,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
 
 
-// Слушатель клика по кнопке редактирования профиля
-profileEditBtn.addEventListener('click', openPopupEditForm);
-
 // Экземпляр класса PopupWithForm - для формы редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
 popupEditForm.setEventListeners();
@@ -49,9 +46,6 @@ validatorUserForm.enableValidation();
 const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
 validatorPlaceForm.enableValidation();
 
-
-// Слушатель клика по кнопке добавления новой карточки
-profileAddBtn.addEventListener('click', openPopupAddCard);
 
 // Открываем попап добавления новой карточки
 function openPopupAddCard() {
@@ -99,6 +93,13 @@ const cardItem = new Section({
         cardList.addPrependItem(cardElement);
     }
 }, cardsSection);
+
+
+// Слушатель клика по кнопке редактирования профиля
+profileEditBtn.addEventListener('click', openPopupEditForm);
+
+// Слушатель клика по кнопке добавления новой карточки
+profileAddBtn.addEventListener('click', openPopupAddCard);
 
 // Слушатель клика по кнопке закрытия попапа с картинкой
 popupViewPicCloseBtn.addEventListener('click', () => {
