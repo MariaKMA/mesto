@@ -25,14 +25,8 @@ export const initialCards = [
     }
 ];
 
-export const popupViewPic = document.querySelector('.popup_type_view-pic');
-export const popupViewPicCloseBtn = popupViewPic.querySelector('.popup__close-btn_type_view-pic');
-
 export const formElementTypeUser = document.querySelector('.popup__container_type_user');
 export const formElementTypePlace = document.querySelector('.popup__container_type_place');
-
-export const placeCaptionInput = formElementTypePlace.querySelector('.popup__place_type_title');
-export const placeLinkInput = formElementTypePlace.querySelector('.popup__place_type_link');
 
 // Переменные для редактирования профиля
 export const profileEditBtn = document.querySelector('.profile__edit-btn');

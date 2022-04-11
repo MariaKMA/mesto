@@ -1,17 +1,13 @@
 import './index.css';
 
-import {initialCards,
-    popupViewPicCloseBtn, formElementTypeUser, formElementTypePlace,
-    placeCaptionInput, placeLinkInput, profileEditBtn, inputUserName, inputUserInterest, cardsSection,
+import {initialCards, formElementTypeUser, formElementTypePlace,
+    profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config
-} from "../data.js";
+} from "../utils/constants.js";
 
-// import FormValidator from "../FormValidator.js";
 import FormValidator from "../components/FormValidator";
-
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
-import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
@@ -21,9 +17,23 @@ import UserInfo from "../components/UserInfo.js";
 const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
 popupEditForm.setEventListeners();
 
+// Экземпляр класса PopupWithForm - для формы добавления новой карточки
+const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
+popupAddCard.setEventListeners();
+
+// Экземпляр класса popupTypeViewPic - для попапа просмотра картинки
+const popupTypeViewPic = new PopupWithImage(null, null, '.popup_type_view-pic');
+popupTypeViewPic.setEventListeners();
+
 // Экземпляр класса UserInfo
 const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest'});
 
+// Запуск валидации форм
+const validatorUserForm = new FormValidator(config, formElementTypeUser);
+validatorUserForm.enableValidation();
+
+const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
+validatorPlaceForm.enableValidation();
 
 // Открываем попап с формой редактирования профиля
 function openPopupEditForm() {
@@ -39,73 +49,42 @@ function handleProfileFormSubmit(userData) {
     popupEditForm.close();
 }
 
-// Запуск валидации форм
-const validatorUserForm = new FormValidator(config, formElementTypeUser);
-validatorUserForm.enableValidation();
-
-const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
-validatorPlaceForm.enableValidation();
-
-
 // Открываем попап добавления новой карточки
 function openPopupAddCard() {
     popupAddCard.open();
     validatorPlaceForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
 
+// Функция создания новой карточки
+function createCard(link, title) {
+    const card = new Card(link, title, '.card-template', (link, title) => {
+        const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
+        popupWithImage.open();
+    });
+    return card.generate();
+}
 
-// Экземпляр класса Section для добавления карточек из массива
+// Экземпляр класса Section - добавление карточек на страницу
 const cardList = new Section({
     items: initialCards,
     renderer: (item) => {
-        const card = new Card(item.link, item.name, '.card-template', () => {
-            const popupWithImage = new PopupWithImage(item.link, item.name, '.popup_type_view-pic');
-            popupWithImage.open();
-            });
-        const cardElement = card.generate();
-        cardList.addAppendItem(cardElement);
+        const card = createCard(item.link, item.name);
+        cardList.addItem(card)
     }
 }, cardsSection);
 
 // Отрисовываем на странице карточки из массива
 cardList.renderItems();
 
-
-// Создаём экземпляр класса PopupWithForm - для формы добавления новой карточки
-const popupAddCard = new PopupWithForm('.popup_type_place', handleAddFormSubmit);
-popupAddCard.setEventListeners();
-
-// Функция-обработчик сабмита формы добавления новой карточки
-function handleAddFormSubmit() {
-    cardItem.renderItems(); // добавляем карточку на страницу
+// Обработчик сабмита формы добавления новой карточки
+function handleAddCardFormSubmit(values) {
+    const card = createCard(values.imageLink, values.placeTitle);
+    cardList.addItem(card);
     popupAddCard.close();
 }
-
-// Экземпляр класса Section для добавления карточки с помощью формы
-const cardItem = new Section({
-    items: [{}],
-    renderer: () => {
-        const card = new Card(placeLinkInput.value, placeCaptionInput.value, '.card-template', (link, name) => {
-            const popupWithImage = new PopupWithImage(link, name, '.popup_type_view-pic');
-            popupWithImage.open();
-            });
-        const cardElement = card.generate();
-        cardList.addPrependItem(cardElement);
-    }
-}, cardsSection);
-
 
 // Слушатель клика по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
 // Слушатель клика по кнопке добавления новой карточки
 profileAddBtn.addEventListener('click', openPopupAddCard);
-
-// Слушатель клика по кнопке закрытия попапа с картинкой
-popupViewPicCloseBtn.addEventListener('click', () => {
-    const popupTypeViewPic = new Popup('.popup_type_view-pic');
-    popupTypeViewPic.close()
-});
-
-
-
