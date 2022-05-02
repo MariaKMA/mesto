@@ -2,7 +2,7 @@ import './index.css';
 
 import {initialCards, formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
-    profileAddBtn, config
+    profileAddBtn, config, userName, userInterest, profileAvatar
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator";
@@ -11,6 +11,21 @@ import Card from "../components/Card.js";
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api";
+
+// Экземпляр класса Api - для получения данных пользователя
+const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', null);
+apiGetUserInfo.getInfo()
+    .then((result) => {
+        userName.textContent = result.name;
+        userInterest.textContent = result.about;
+        profileAvatar.src = result.avatar;
+    })
+
+    // если запрос не ушел на сервер или сервер не ответил
+    .catch((err) => {
+        console.log(err);
+    });
 
 
 // Экземпляр класса PopupWithForm - для формы редактирования профиля
@@ -46,6 +61,10 @@ function openPopupEditForm() {
 // Обработчик сабмита формы редактирования профиля
 function handleProfileFormSubmit(userData) {
     profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
+
+    // отправляем обновленные данные на сервер
+    const updateUserInfo = new Api('https://mesto.nomoreparties.co/v1/cohort-40/users/me', null);
+    updateUserInfo.updateInfo(userData.userName, userData.userInterest);
     popupEditForm.close();
 }
 
@@ -54,6 +73,7 @@ function openPopupAddCard() {
     popupAddCard.open();
     validatorPlaceForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
+
 
 // Функция создания новой карточки
 function createCard(link, title) {
@@ -64,22 +84,40 @@ function createCard(link, title) {
     return card.generate();
 }
 
+
 // Экземпляр класса Section - добавление карточек на страницу
 const cardList = new Section({
-    items: initialCards,
+    items: [],
     renderer: (item) => {
         const card = createCard(item.link, item.name);
         cardList.addItem(card)
     }
 }, cardsSection);
 
-// Отрисовываем на странице карточки из массива
-cardList.renderItems();
+// Экземпляр класса Api для получения первоначальных карточек
+const apiGetInitialCards = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', null);
+
+// Отрисовываем на странице карточки, полученные с сервера
+apiGetInitialCards.getInfo()
+    .then((result) => {
+        cardList.renderItems(result);
+    })
+
+    // если запрос не ушел на сервер или сервер не ответил
+    .catch((err) => {
+        console.log(err);
+    });
+
 
 // Обработчик сабмита формы добавления новой карточки
 function handleAddCardFormSubmit(values) {
     const card = createCard(values.imageLink, values.placeTitle);
     cardList.addItem(card);
+
+    // Отправляем новую карточку на сервер
+    const addNewCard = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', null);
+    addNewCard.addCard(values.placeTitle, values.imageLink);
+
     popupAddCard.close();
 }
 
