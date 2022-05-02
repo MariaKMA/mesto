@@ -5,5 +5,7 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     max-width: 246px;
-    margin: 25px auto 0;
+    /* margin: 25px auto 0; */
+    margin: 22px auto 0;
+
 }

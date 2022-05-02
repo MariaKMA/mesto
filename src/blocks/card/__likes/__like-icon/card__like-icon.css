@@ -2,7 +2,8 @@
     width: 22px;
     height: 19px;
     align-self: center;
-    background: url(../../../images/likeButton.svg);
+    background: url(../../../../images/likeButton.svg) no-repeat;
+
     border: none;
     transition: opacity .5s ease-in-out;
 }
