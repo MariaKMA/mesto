@@ -1,8 +1,9 @@
 export default class Card {
 
-    constructor(link, name, cardSelector, handleCardClick) {
+    constructor(link, name, likes, cardSelector, handleCardClick) {
         this._link = link;
         this._name = name;
+        this._likes = likes;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
     }
@@ -23,12 +24,14 @@ export default class Card {
         this._likeIcon = this._card.querySelector('.card__like-icon');
         this._trashIcon = this._card.querySelector('.card__trash-icon');
         this._cardCaption = this._card.querySelector('.card__caption');
+        this._likesCounter = this._card.querySelector('.card__likes-counter');
 
         this._setEventListeners();
 
         this._cardImage.src = this._link;
         this._cardImage.alt = this._name;
         this._cardCaption.textContent = this._name;
+        this._likesCounter.textContent = this._likes.length; // количество лайков
 
         return this._card;
     }
