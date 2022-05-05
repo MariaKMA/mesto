@@ -76,20 +76,49 @@ function openPopupAddCard() {
 
 
 // Функция создания новой карточки
-function createCard(link, title, likes) {
-    const card = new Card(link, title, likes, '.card-template', (link, title) => {
-        const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
-        popupWithImage.open();
-    });
+function createCard(link, title, likes, cardId) {
+    const card = new Card(
+        link,
+        title,
+        likes,
+        '.card-template',
+        (link, title) => {
+            const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
+            popupWithImage.open();
+        },
+        () => {
+            const apiCardLike = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, null);
+            const cardLikeClassActive = card._likeIcon.classList.contains('card__like-icon_active');
+            if (!cardLikeClassActive) {
+                apiCardLike.likeCard()
+                    .then((result) => {
+                        card.updateLikesCount(result);
+                    })
+                    // если запрос не ушел на сервер или сервер не ответил
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+            else {
+                apiCardLike.deleteLikeCard()
+                    .then((result) => {
+                        card.updateLikesCount(result);
+                    })
+                    // если запрос не ушел на сервер или сервер не ответил
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+        }
+    );
     return card.generate();
 }
-
 
 // Экземпляр класса Section - добавление карточек на страницу
 const cardList = new Section({
     items: [],
     renderer: (item) => {
-        const card = createCard(item.link, item.name, item.likes);
+        const card = createCard(item.link, item.name, item.likes, item._id);
         cardList.addItem(card)
     }
 }, cardsSection);

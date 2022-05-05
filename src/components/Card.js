@@ -1,11 +1,20 @@
 export default class Card {
 
-    constructor(link, name, likes, cardSelector, handleCardClick) {
+    // constructor(link, name, likes, cardSelector, handleCardClick) {
+    //     this._link = link;
+    //     this._name = name;
+    //     this._likes = likes;
+    //     this._cardSelector = cardSelector;
+    //     this._handleCardClick = handleCardClick;
+    // }
+
+    constructor(link, name, likes, cardSelector, handleCardClick, handleCardLike) {
         this._link = link;
         this._name = name;
         this._likes = likes;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
+        this._handleCardLike = handleCardLike;
     }
 
     _getTemplate() {
@@ -31,7 +40,7 @@ export default class Card {
         this._cardImage.src = this._link;
         this._cardImage.alt = this._name;
         this._cardCaption.textContent = this._name;
-        this._likesCounter.textContent = this._likes.length; // количество лайков
+        // this._likesCounter.textContent = this._likes.length; // количество лайков
 
         return this._card;
     }
@@ -40,7 +49,7 @@ export default class Card {
 
         // Лайкнуть карточку
         this._likeIcon.addEventListener('click', () => {
-          this._likeIconClick();
+            this._likeIconClick();
         });
 
         // Удалить карточку
@@ -54,7 +63,12 @@ export default class Card {
         })
     }
 
+    updateLikesCount(data) {
+        this._likesCounter.textContent = data.likes.length;
+    }
+
     _likeIconClick() {
+        this._handleCardLike();
         this._likeIcon.classList.toggle('card__like-icon_active');
     }
 
