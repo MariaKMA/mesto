@@ -76,11 +76,10 @@ function openPopupAddCard() {
 
 
 // Функция создания новой карточки
-function createCard(link, title, likes, cardId) {
+function createCard(link, title, cardId) {
     const card = new Card(
         link,
         title,
-        likes,
         '.card-template',
         (link, title) => {
             const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
@@ -118,8 +117,8 @@ function createCard(link, title, likes, cardId) {
 const cardList = new Section({
     items: [],
     renderer: (item) => {
-        const card = createCard(item.link, item.name, item.likes, item._id);
-        cardList.addItem(card)
+        const card = createCard(item.link, item.name, item._id);
+        cardList.addItem(card);
     }
 }, cardsSection);
 
@@ -140,7 +139,7 @@ apiGetInitialCards.getInfo()
 
 // Обработчик сабмита формы добавления новой карточки
 function handleAddCardFormSubmit(values) {
-    const card = createCard(values.imageLink, values.placeTitle, []);
+    const card = createCard(values.imageLink, values.placeTitle, null);
     cardList.addItem(card);
 
     // Отправляем новую карточку на сервер
