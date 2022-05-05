@@ -49,6 +49,12 @@ export default class Api {
                 link: cardLink
             })
         })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
     }
 
     likeCard() {

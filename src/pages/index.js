@@ -74,8 +74,7 @@ function openPopupAddCard() {
     validatorPlaceForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
 
-
-// Функция создания новой карточки
+// Функция создания карточки
 function createCard(link, title, cardId) {
     const card = new Card(
         link,
@@ -139,12 +138,19 @@ apiGetInitialCards.getInfo()
 
 // Обработчик сабмита формы добавления новой карточки
 function handleAddCardFormSubmit(values) {
-    const card = createCard(values.imageLink, values.placeTitle, null);
-    cardList.addItem(card);
 
     // Отправляем новую карточку на сервер
     const addNewCard = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', null);
-    addNewCard.addCard(values.placeTitle, values.imageLink);
+    addNewCard.addCard(values.placeTitle, values.imageLink)
+        .then((res) => {
+            // Создаем и отрисовываем карточку на странице
+            const card = createCard(res.link, res.name, res._id);
+            cardList.addItem(card);
+        })
+        // если запрос не ушел на сервер или сервер не ответил
+        .catch((err) => {
+            console.log(err);
+        });
 
     popupAddCard.close();
 }
