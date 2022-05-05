@@ -1,6 +1,6 @@
 import './index.css';
 
-import {initialCards, formElementTypeUser, formElementTypePlace,
+import {formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config, userName, userInterest, profileAvatar
 } from "../utils/constants.js";
@@ -129,8 +129,6 @@ apiGetInitialCards.getInfo()
     .then((result) => {
         cardList.renderItems(result);
     })
-
-    // если запрос не ушел на сервер или сервер не ответил
     .catch((err) => {
         console.log(err);
     });
@@ -147,7 +145,6 @@ function handleAddCardFormSubmit(values) {
             const card = createCard(res.link, res.name, res._id);
             cardList.addItem(card);
         })
-        // если запрос не ушел на сервер или сервер не ответил
         .catch((err) => {
             console.log(err);
         });
