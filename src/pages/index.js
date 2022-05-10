@@ -5,13 +5,15 @@ import {formElementTypeUser, formElementTypePlace,
     profileAddBtn, config, userName, userInterest, profileAvatar
 } from "../utils/constants.js";
 
-import FormValidator from "../components/FormValidator";
+import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
-import Api from "../components/Api";
+import Api from "../components/Api.js";
+// import Popup from '../components/Popup.js';
+import PopupAreYouSure from '../components/PopupAreYouSure.js'
 
 // Экземпляр класса Api - для получения данных пользователя
 const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', null);
@@ -35,10 +37,6 @@ popupEditForm.setEventListeners();
 // Экземпляр класса PopupWithForm - для формы добавления новой карточки
 const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
 popupAddCard.setEventListeners();
-
-// Экземпляр класса popupTypeViewPic - для попапа просмотра картинки
-const popupTypeViewPic = new PopupWithImage(null, null, '.popup_type_view-pic');
-popupTypeViewPic.setEventListeners();
 
 // Экземпляр класса UserInfo
 const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest'});
@@ -75,18 +73,24 @@ function openPopupAddCard() {
 }
 
 // Функция создания карточки
-function createCard(link, title, cardId) {
+function createCard(link, title, cardId, canDelete) {
     const card = new Card(
         link,
         title,
         '.card-template',
+        canDelete,
+
+        // _handleCardClick - просмотр карточки
         (link, title) => {
             const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
+            popupWithImage.setEventListeners();
             popupWithImage.open();
         },
+
+        // _handleCardLike - простановка и снятие лайков
         () => {
             const apiCardLike = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, null);
-            const cardLikeClassActive = card._likeIcon.classList.contains('card__like-icon_active');
+            const cardLikeClassActive = card.likeIcon.classList.contains('card__like-icon_active');
             if (!cardLikeClassActive) {
                 apiCardLike.likeCard()
                     .then((result) => {
@@ -107,6 +111,21 @@ function createCard(link, title, cardId) {
                         console.log(err);
                     });
             }
+        },
+
+        // _handleCardDelete - удаление карточки
+        () => {
+            // Экземпляр класса PopupWithForm - для удаления карточки
+            const popupDeleteCard = new PopupAreYouSure('.popup_type_delete-card', handleCardDeleteFormSubmit);
+            function handleCardDeleteFormSubmit() {
+                const apiCardDelete = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`)
+                apiCardDelete.deleteCard(); // удаляем карточку с сервера
+                card.removeCard(); // удаляем карточку со страницы
+                popupDeleteCard.close();
+            }
+            popupDeleteCard.setEventListeners();
+            popupDeleteCard.open();
+
         }
     );
     return card.generate();
@@ -116,7 +135,7 @@ function createCard(link, title, cardId) {
 const cardList = new Section({
     items: [],
     renderer: (item) => {
-        const card = createCard(item.link, item.name, item._id);
+        const card = createCard(item.link, item.name, item._id, false);
         cardList.addItem(card);
     }
 }, cardsSection);
@@ -142,7 +161,7 @@ function handleAddCardFormSubmit(values) {
     addNewCard.addCard(values.placeTitle, values.imageLink)
         .then((res) => {
             // Создаем и отрисовываем карточку на странице
-            const card = createCard(res.link, res.name, res._id);
+            const card = createCard(res.link, res.name, res._id, true);
             cardList.addItem(card);
         })
         .catch((err) => {

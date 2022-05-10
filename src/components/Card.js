@@ -1,11 +1,15 @@
 export default class Card {
 
-    constructor(link, name, cardSelector, handleCardClick, handleCardLike) {
+    // constructor(link, name, cardSelector, handleCardClick, handleCardLike, handleCardDelete) {
+    constructor(link, name, cardSelector, canDelete, handleCardClick, handleCardLike, handleCardDelete) {
+
         this._link = link;
         this._name = name;
         this._cardSelector = cardSelector;
+        this._canDelete = canDelete;
         this._handleCardClick = handleCardClick;
         this._handleCardLike = handleCardLike;
+        this._handleCardDelete = handleCardDelete;
     }
 
     _getTemplate() {
@@ -21,10 +25,15 @@ export default class Card {
     generate() {
         this._card = this._getTemplate();
         this._cardImage = this._card.querySelector('.card__img');
-        this._likeIcon = this._card.querySelector('.card__like-icon');
+        this.likeIcon = this._card.querySelector('.card__like-icon');
         this._trashIcon = this._card.querySelector('.card__trash-icon');
         this._cardCaption = this._card.querySelector('.card__caption');
         this._likesCounter = this._card.querySelector('.card__likes-counter');
+
+        // Если передан флаг, что карточку нельзя удалять, то убираем иконку корзины
+        if (!this._canDelete) {
+            this._trashIcon.style.display = 'none';
+        }
 
         this._setEventListeners();
 
@@ -37,7 +46,7 @@ export default class Card {
     _setEventListeners() {
 
         // Лайкнуть карточку
-        this._likeIcon.addEventListener('click', () => {
+        this.likeIcon.addEventListener('click', () => {
             this._likeIconClick();
         });
 
@@ -58,10 +67,16 @@ export default class Card {
 
     _likeIconClick() {
         this._handleCardLike();
-        this._likeIcon.classList.toggle('card__like-icon_active');
+        this.likeIcon.classList.toggle('card__like-icon_active');
     }
 
     _deleteCardClick() {
+        this._handleCardDelete();
+        // this._card.remove();
+        // this._card = null;
+    }
+
+    removeCard() {
         this._card.remove();
         this._card = null;
     }

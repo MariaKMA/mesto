@@ -17,8 +17,9 @@ export default class Api {
         })
         .then(res => {
             if (res.ok) {
-                return res.json();
+                return res.json()
             }
+
             return Promise.reject(`Ошибка: ${res.status}`);
         })
     }
@@ -74,6 +75,22 @@ export default class Api {
     }
 
     deleteLikeCard() {
+        return fetch(this._url, {
+            method: 'DELETE',
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+    }
+
+    deleteCard() {
         return fetch(this._url, {
             method: 'DELETE',
             headers: {
