@@ -37,8 +37,6 @@ export const inputUserInterest = formElementTypeUser.querySelector('.popup__user
 export const cardsSection = document.querySelector('.cards');
 export const profileAddBtn = document.querySelector('.profile__add-btn');
 
-// export const deleteCardBtn = document.querySelector('.card__trash-icon');
-
 export const userName = document.querySelector('.profile__user-name');
 export const userInterest = document.querySelector('.profile__user-interest');
 export const profileAvatar = document.querySelector('.profile__avatar');

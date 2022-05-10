@@ -10,9 +10,7 @@ export default class PopupAreYouSure extends Popup {
 
     setEventListeners() {
         super.setEventListeners();
-        console.log('из setEventListeners PopupAreYouSure');
         this._btnElement.addEventListener('click', () => {
-            console.log('из addEventListener submit PopupAreYouSure');
             this._handleFormSubmit();
         });
     }

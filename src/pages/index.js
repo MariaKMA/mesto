@@ -37,15 +37,15 @@ apiGetUserInfo.getInfo()
 const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
 popupEditForm.setEventListeners();
 
-// Экземпляр класса PopupWithForm - для формы добавления новой карточки
-const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
-popupAddCard.setEventListeners();
-
 // Экземпляр класса PopupWuthFOrm - для формы редактирования аватара
 const popipEditAvatar = new PopupWithForm('.popup_type_avatar', handleEditAvatarSubmit);
 popipEditAvatar.setEventListeners();
 
-// Отправляем на сервер новую ссылку для аватара и отрисовываем новый аватар
+// Экземпляр класса PopupWithForm - для формы добавления новой карточки
+const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
+popupAddCard.setEventListeners();
+
+// Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
     const avatar = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar`, {
@@ -99,6 +99,24 @@ function handleProfileFormSubmit(userData) {
     popupEditForm.close();
 }
 
+// Обработчик наведения мыши на аватар
+function showAvatarEditIcon(evt) {
+    evt.target.style.opacity = '0.8';
+    evt.target.style.backgroundColor = 'black';
+    profileAvatarEditBtn.style.visibility = 'visible';
+}
+
+// Обработчик ухода указателя мыши с аватара
+function hideAvatarEditIcon(evt) {
+    evt.target.style.opacity = '1';
+    profileAvatarEditBtn.style.visibility = 'hidden';
+}
+
+// Обработчик клика по кнопке редактирования аватара
+function openPopupEditAvatar() {
+    popipEditAvatar.open();
+}
+
 // Открываем попап добавления новой карточки
 function openPopupAddCard() {
     popupAddCard.open();
@@ -112,7 +130,7 @@ function createCard(link, title, likes, cardId, canDelete) {
         title,
         likes,
         '.card-template',
-        canDelete,
+        canDelete, // флаг для отметки карточек, созданных мной и пригодных для удаления
 
         // _handleCardClick - просмотр карточки
         (link, title) => {
@@ -176,7 +194,8 @@ function createCard(link, title, likes, cardId, canDelete) {
 const cardList = new Section({
     items: [],
     renderer: (item) => {
-        const card = createCard(item.link, item.name, item.likes.length, item._id, false);
+        const canDelete = item.owner._id === 'ead37e227a5255f9ff26c281' ? true : false;
+        const card = createCard(item.link, item.name, item.likes.length, item._id, canDelete);
         cardList.addItem(card);
     }
 }, cardsSection);
@@ -222,31 +241,14 @@ function handleAddCardFormSubmit(values) {
 // Слушатель клика по кнопке редактирования профиля
 profileEditBtn.addEventListener('click', openPopupEditForm);
 
-// Слушатель клика по кнопке добавления новой карточки
-profileAddBtn.addEventListener('click', openPopupAddCard);
-
 // Слушатель перехода мышки на аватарку пользователя
 profileAvatarAria.addEventListener('mouseover', showAvatarEditIcon);
-
-function showAvatarEditIcon(evt) {
-    evt.target.style.opacity = '0.8';
-    evt.target.style.backgroundColor = 'black';
-    profileAvatarEditBtn.style.visibility = 'visible';
-
-}
 
 // Слушатель ухода мышки с аватарки пользователя
 profileAvatarAria.addEventListener('mouseout', hideAvatarEditIcon);
 
-function hideAvatarEditIcon(evt) {
-    evt.target.style.opacity = '1';
-    profileAvatarEditBtn.style.visibility = 'hidden';
-
-}
-
 // Слушатель клика по иконке редактирования аватарки
 profileAvatarEditBtn.addEventListener('click', openPopupEditAvatar);
 
-function openPopupEditAvatar() {
-    popipEditAvatar.open();
-}
+// Слушатель клика по кнопке добавления новой карточки
+profileAddBtn.addEventListener('click', openPopupAddCard);
