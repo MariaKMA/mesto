@@ -70,6 +70,18 @@
         </form>
     </div>
 
+    <div class="popup popup_type_avatar">
+        <form class="popup__container popup__container_type_avatar popup__form" name="avatarForm" novalidate>
+            <h2 class="popup__header">Обновить аватар</h2>
+
+            <input id="avatarLink-input" type="url" name="avatarLink" placeholder="Ссылка на аватар" class="popup__input popup__avatar popup__avatar_type_link" required>
+            <span class="avatarLink-input-error popup__error"></span>
+
+            <button type="submit" class="popup__save-btn">Сохранить</button>
+            <button type="button" class="popup__close-btn popup__close-btn_type_avatar" aria-label="Закрыть форму редактирования аватара"></button>
+        </form>
+    </div>
+
     <div class="popup popup_type_view-pic">
         <div class="popup__container popup__container_type_view-pic">
             <img class="popup__image">

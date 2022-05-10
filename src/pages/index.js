@@ -2,7 +2,8 @@ import './index.css';
 
 import {formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
-    profileAddBtn, config, userName, userInterest, profileAvatar, profileAvatarAria, profileAvatarEditBtn
+    profileAddBtn, config, userName, userInterest, profileAvatar,
+    profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
@@ -12,8 +13,8 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-// import Popup from '../components/Popup.js';
 import PopupAreYouSure from '../components/PopupAreYouSure.js'
+
 
 // Экземпляр класса Api - для получения данных пользователя
 const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', null);
@@ -38,6 +39,24 @@ popupEditForm.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
 popupAddCard.setEventListeners();
 
+// Экземпляр класса PopupWuthFOrm - для формы редактирования аватара
+const popipEditAvatar = new PopupWithForm('.popup_type_avatar', handleEditAvatarSubmit);
+popipEditAvatar.setEventListeners();
+
+// Отправляем на сервер новую ссылку для аватара и отрисовываем новый аватар
+function handleEditAvatarSubmit(values) {
+    const link = values.avatarLink;
+    const avatar = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar`, null);
+    avatar.editAvatar(link)
+        .then((res) => {
+            profileAvatar.src = res.avatar;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    popipEditAvatar.close();
+}
+
 // Экземпляр класса UserInfo
 const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest'});
 
@@ -58,11 +77,12 @@ function openPopupEditForm() {
 
 // Обработчик сабмита формы редактирования профиля
 function handleProfileFormSubmit(userData) {
-    profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
 
     // отправляем обновленные данные на сервер
     const updateUserInfo = new Api('https://mesto.nomoreparties.co/v1/cohort-40/users/me', null);
     updateUserInfo.updateInfo(userData.userName, userData.userInterest);
+
+    profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
     popupEditForm.close();
 }
 
@@ -194,4 +214,11 @@ function hideAvatarEditIcon(evt) {
     evt.target.style.opacity = '1';
     profileAvatarEditBtn.style.visibility = 'hidden';
 
+}
+
+// Слушатель клика по иконке редактирования аватарки
+profileAvatarEditBtn.addEventListener('click', openPopupEditAvatar);
+
+function openPopupEditAvatar() {
+    popipEditAvatar.open();
 }
