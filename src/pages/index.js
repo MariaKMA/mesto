@@ -17,14 +17,16 @@ import PopupAreYouSure from '../components/PopupAreYouSure.js'
 
 
 // Экземпляр класса Api - для получения данных пользователя
-const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', null);
+const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', {
+        'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+    }
+);
 apiGetUserInfo.getInfo()
     .then((result) => {
         userName.textContent = result.name;
         userInterest.textContent = result.about;
         profileAvatar.src = result.avatar;
     })
-
     // если запрос не ушел на сервер или сервер не ответил
     .catch((err) => {
         console.log(err);
@@ -46,7 +48,11 @@ popipEditAvatar.setEventListeners();
 // Отправляем на сервер новую ссылку для аватара и отрисовываем новый аватар
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
-    const avatar = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar`, null);
+    const avatar = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar`, {
+            'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
+            'Content-Type': 'application/json'
+        }
+    );
     avatar.editAvatar(link)
         .then((res) => {
             profileAvatar.src = res.avatar;
@@ -79,8 +85,15 @@ function openPopupEditForm() {
 function handleProfileFormSubmit(userData) {
 
     // отправляем обновленные данные на сервер
-    const updateUserInfo = new Api('https://mesto.nomoreparties.co/v1/cohort-40/users/me', null);
-    updateUserInfo.updateInfo(userData.userName, userData.userInterest);
+    const updateUserInfo = new Api('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
+            authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
+            'Content-Type': 'application/json'
+        }
+    );
+    updateUserInfo.updateInfo(userData.userName, userData.userInterest)
+        .catch((err) => {
+            console.log(err);
+        });
 
     profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
     popupEditForm.close();
@@ -109,14 +122,16 @@ function createCard(link, title, cardId, canDelete) {
 
         // _handleCardLike - простановка и снятие лайков
         () => {
-            const apiCardLike = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, null);
+            const apiCardLike = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
+                    'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+                }
+            );
             const cardLikeClassActive = card.likeIcon.classList.contains('card__like-icon_active');
             if (!cardLikeClassActive) {
                 apiCardLike.likeCard()
                     .then((result) => {
                         card.updateLikesCount(result);
                     })
-                    // если запрос не ушел на сервер или сервер не ответил
                     .catch((err) => {
                         console.log(err);
                     });
@@ -126,7 +141,6 @@ function createCard(link, title, cardId, canDelete) {
                     .then((result) => {
                         card.updateLikesCount(result);
                     })
-                    // если запрос не ушел на сервер или сервер не ответил
                     .catch((err) => {
                         console.log(err);
                     });
@@ -138,8 +152,14 @@ function createCard(link, title, cardId, canDelete) {
             // Экземпляр класса PopupWithForm - для удаления карточки
             const popupDeleteCard = new PopupAreYouSure('.popup_type_delete-card', handleCardDeleteFormSubmit);
             function handleCardDeleteFormSubmit() {
-                const apiCardDelete = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`)
-                apiCardDelete.deleteCard(); // удаляем карточку с сервера
+                const apiCardDelete = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
+                        'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+                    }
+                )
+                apiCardDelete.deleteCard() // удаляем карточку с сервера
+                .catch((err) => {
+                    console.log(err);
+                });
                 card.removeCard(); // удаляем карточку со страницы
                 popupDeleteCard.close();
             }
@@ -161,7 +181,10 @@ const cardList = new Section({
 }, cardsSection);
 
 // Экземпляр класса Api для получения первоначальных карточек
-const apiGetInitialCards = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', null);
+const apiGetInitialCards = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+    'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+    }
+);
 
 // Отрисовываем на странице карточки, полученные с сервера
 apiGetInitialCards.getInfo()
@@ -177,7 +200,11 @@ apiGetInitialCards.getInfo()
 function handleAddCardFormSubmit(values) {
 
     // Отправляем новую карточку на сервер
-    const addNewCard = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', null);
+    const addNewCard = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+            authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
+            'Content-Type': 'application/json'
+        }
+    );
     addNewCard.addCard(values.placeTitle, values.imageLink)
         .then((res) => {
             // Создаем и отрисовываем карточку на странице

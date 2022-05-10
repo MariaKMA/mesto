@@ -1,6 +1,3 @@
-// ЗАЧЕМ ЗАГОЛОВКИ В constructor ???
-// добавить .then, где отсутствует
-
 export default class Api {
     constructor(url, headers) {
         this._url = url;
@@ -10,10 +7,7 @@ export default class Api {
     getInfo() {
         return fetch(this._url, {
             method: 'GET',
-            headers: {
-                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(res => {
             if (res.ok) {
@@ -27,24 +21,25 @@ export default class Api {
     updateInfo(userName, userInterest) {
         return fetch(this._url, {
             method: 'PATCH',
-            headers: {
-                authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: userName,
                 about: userInterest
             })
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+
+            return Promise.reject(`Ошибка: ${res.status}`);
         })
     }
 
     addCard(cardName, cardLink) {
         return fetch(this._url, {
             method: 'POST',
-            headers: {
-                authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: cardName,
                 link: cardLink
@@ -61,10 +56,7 @@ export default class Api {
     likeCard() {
         return fetch(this._url, {
             method: 'PUT',
-            headers: {
-                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(res => {
             if (res.ok) {
@@ -77,10 +69,7 @@ export default class Api {
     deleteLikeCard() {
         return fetch(this._url, {
             method: 'DELETE',
-            headers: {
-                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(res => {
             if (res.ok) {
@@ -93,10 +82,7 @@ export default class Api {
     deleteCard() {
         return fetch(this._url, {
             method: 'DELETE',
-            headers: {
-                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(res => {
             if (res.ok) {
@@ -109,10 +95,7 @@ export default class Api {
     editAvatar(avatarLink) {
         return fetch(this._url, {
             method: 'PATCH',
-            headers: {
-                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 avatar: avatarLink
             })
