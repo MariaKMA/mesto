@@ -2,7 +2,7 @@ import './index.css';
 
 import {formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
-    profileAddBtn, config, userName, userInterest, profileAvatar
+    profileAddBtn, config, userName, userInterest, profileAvatar, profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
@@ -176,3 +176,22 @@ profileEditBtn.addEventListener('click', openPopupEditForm);
 
 // Слушатель клика по кнопке добавления новой карточки
 profileAddBtn.addEventListener('click', openPopupAddCard);
+
+// Слушатель перехода мышки на аватарку пользователя
+profileAvatarAria.addEventListener('mouseover', showAvatarEditIcon);
+
+function showAvatarEditIcon(evt) {
+    evt.target.style.opacity = '0.8';
+    evt.target.style.backgroundColor = 'black';
+    profileAvatarEditBtn.style.visibility = 'visible';
+
+}
+
+// Слушатель ухода мышки с аватарки пользователя
+profileAvatarAria.addEventListener('mouseout', hideAvatarEditIcon);
+
+function hideAvatarEditIcon(evt) {
+    evt.target.style.opacity = '1';
+    profileAvatarEditBtn.style.visibility = 'hidden';
+
+}
