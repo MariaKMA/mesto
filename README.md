@@ -13,7 +13,7 @@
 5. Анимация для плавного появления на странице попапов и плавного их исчезновения.
 6. Работа с методами массивов.
 7. Реализована функция валидации форм.
-8. Реализованы классы Card,FormValidator, Popup  и наследующие от него классы PopupWithForm и PopupWithImage, Section, UserInfo.
+8. Реализованы классы Card, FormValidator, Api, Popup и наследующие от него классы PopupWithForm, PopupAreYouSure и PopupWithImage, Section, UserInfo.
 9. Сборка проекта с помощью Webpack.
 
 **Ссылка на проект на GitHub Pages**
