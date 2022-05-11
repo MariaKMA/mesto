@@ -50,4 +50,6 @@ export const config = {
     errorClass: 'popup__error_active',
     submitButtonSelector: '.popup__save-btn',
     submitButtonErrorClass: 'popup__save-btn_invalid'
-}
+};
+
+export const ownerId = 'ead37e227a5255f9ff26c281';

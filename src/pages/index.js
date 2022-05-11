@@ -3,7 +3,7 @@ import './index.css';
 import {formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config, userName, userInterest, profileAvatar,
-    profileAvatarAria, profileAvatarEditBtn
+    profileAvatarAria, profileAvatarEditBtn, ownerId
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
@@ -16,12 +16,17 @@ import Api from "../components/Api.js";
 import PopupAreYouSure from '../components/PopupAreYouSure.js'
 
 
-// Экземпляр класса Api - для получения данных пользователя
-const apiGetUserInfo = new Api('https://nomoreparties.co/v1/cohort-40/users/me', {
-        'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
-    }
-);
-apiGetUserInfo.getInfo()
+// Экземпляр класса Api
+const api = new Api({
+        baseUrl: 'https://nomoreparties.co/v1/cohort-40',
+        headers: {
+            'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
+            'Content-Type': 'application/json'
+        }
+});
+
+// Получаем с сервера и выводим на страницу данные пользователя
+api.getUserInfo()
     .then((result) => {
         userName.textContent = result.name;
         userInterest.textContent = result.about;
@@ -37,7 +42,7 @@ apiGetUserInfo.getInfo()
 const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
 popupEditForm.setEventListeners();
 
-// Экземпляр класса PopupWuthFOrm - для формы редактирования аватара
+// Экземпляр класса PopupWuthForm - для формы редактирования аватара
 const popipEditAvatar = new PopupWithForm('.popup_type_avatar', handleEditAvatarSubmit);
 popipEditAvatar.setEventListeners();
 
@@ -48,12 +53,7 @@ popupAddCard.setEventListeners();
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
-    const avatar = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar`, {
-            'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
-            'Content-Type': 'application/json'
-        }
-    );
-    avatar.editAvatar(link)
+    api.editAvatar(link)
         .then((res) => {
             profileAvatar.src = res.avatar;
         })
@@ -83,14 +83,8 @@ function openPopupEditForm() {
 
 // Обработчик сабмита формы редактирования профиля
 function handleProfileFormSubmit(userData) {
-
     // отправляем обновленные данные на сервер
-    const updateUserInfo = new Api('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
-            authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
-            'Content-Type': 'application/json'
-        }
-    );
-    updateUserInfo.updateInfo(userData.userName, userData.userInterest)
+    api.updateUserInfo(userData.userName, userData.userInterest)
         .catch((err) => {
             console.log(err);
         });
@@ -141,13 +135,9 @@ function createCard(link, title, likes, cardId, canDelete) {
 
         // _handleCardLike - простановка и снятие лайков
         () => {
-            const apiCardLike = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
-                    'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
-                }
-            );
             const cardLikeClassActive = card.likeIcon.classList.contains('card__like-icon_active');
             if (!cardLikeClassActive) {
-                apiCardLike.likeCard()
+                api.likeCard(cardId)
                     .then((result) => {
                         card.updateLikesCount(result);
                     })
@@ -156,7 +146,7 @@ function createCard(link, title, likes, cardId, canDelete) {
                     });
             }
             else {
-                apiCardLike.deleteLikeCard()
+                api.deleteLikeCard(cardId)
                     .then((result) => {
                         card.updateLikesCount(result);
                     })
@@ -171,11 +161,7 @@ function createCard(link, title, likes, cardId, canDelete) {
             // Экземпляр класса PopupWithForm - для удаления карточки
             const popupDeleteCard = new PopupAreYouSure('.popup_type_delete-card', handleCardDeleteFormSubmit);
             function handleCardDeleteFormSubmit() {
-                const apiCardDelete = new Api(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
-                        'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
-                    }
-                )
-                apiCardDelete.deleteCard() // удаляем карточку с сервера
+                api.deleteCard(cardId) // удаляем карточку с сервера
                 .catch((err) => {
                     console.log(err);
                 });
@@ -194,20 +180,15 @@ function createCard(link, title, likes, cardId, canDelete) {
 const cardList = new Section({
     items: [],
     renderer: (item) => {
-        const canDelete = item.owner._id === 'ead37e227a5255f9ff26c281' ? true : false;
+        // Проверяем по id пользователя, своя карточка или нет - возможно ли ее удаление пользователем
+        const canDelete = item.owner._id === ownerId ? true : false;
         const card = createCard(item.link, item.name, item.likes.length, item._id, canDelete);
         cardList.addItem(card);
     }
 }, cardsSection);
 
-// Экземпляр класса Api для получения первоначальных карточек
-const apiGetInitialCards = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
-    'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
-    }
-);
-
 // Отрисовываем на странице карточки, полученные с сервера
-apiGetInitialCards.getInfo()
+api.getInitialCards()
     .then((result) => {
         cardList.renderItems(result);
     })
@@ -220,14 +201,9 @@ apiGetInitialCards.getInfo()
 function handleAddCardFormSubmit(values) {
 
     // Отправляем новую карточку на сервер
-    const addNewCard = new Api('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
-            authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
-            'Content-Type': 'application/json'
-        }
-    );
-    addNewCard.addCard(values.placeTitle, values.imageLink)
+    api.addCard(values.placeTitle, values.imageLink)
         .then((res) => {
-            // Создаем и отрисовываем карточку на странице
+            // Создаем и отрисовываем карточку на странице, флаг canDelete устанавливаем в true
             const card = createCard(res.link, res.name, res.likes.length, res._id, true);
             cardList.addItem(card);
         })

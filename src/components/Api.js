@@ -1,13 +1,15 @@
 export default class Api {
-    constructor(url, headers) {
-        this._url = url;
+    constructor(baseUrl, headers) {
+        this._baseUrl = baseUrl;
         this._headers = headers;
     }
-
-    getInfo() {
-        return fetch(this._url, {
+    // Получение данных пользователя с сервера
+    getUserInfo() {
+        return fetch('https://nomoreparties.co/v1/cohort-40/users/me', {
             method: 'GET',
-            headers: this._headers
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+            }
         })
         .then(res => {
             if (res.ok) {
@@ -17,11 +19,29 @@ export default class Api {
             return Promise.reject(`Ошибка: ${res.status}`);
         })
     }
+    // Получение начальных карточек с сервера
+    getInitialCards() {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+            method: 'GET',
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+        }
+        })
+          .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+          });
+      }
 
-    updateInfo(userName, userInterest) {
-        return fetch(this._url, {
+    // Редактирование профиля
+    updateUserInfo(userName, userInterest) {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me', {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 name: userName,
                 about: userInterest
@@ -36,10 +56,34 @@ export default class Api {
         })
     }
 
+    // Редактирование аватара
+    editAvatar(avatarLink) {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-40/users/me/avatar', {
+            method: 'PATCH',
+            headers: {
+                    'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532',
+                    'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: avatarLink
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        })
+    }
+
+    // Добавление пользователем новой карточки
     addCard(cardName, cardLink) {
-        return fetch(this._url, {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
             method: 'POST',
-            headers: this._headers,
+            headers: {
+                authorization: 'f09c6838-ffad-47d4-ac9e-28f932775532',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 name: cardName,
                 link: cardLink
@@ -53,10 +97,13 @@ export default class Api {
         })
     }
 
-    likeCard() {
-        return fetch(this._url, {
+    // Простановка лайка
+    likeCard(cardId) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: this._headers
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+            }
         })
         .then(res => {
             if (res.ok) {
@@ -66,10 +113,13 @@ export default class Api {
         })
     }
 
-    deleteLikeCard() {
-        return fetch(this._url, {
+    // Снятие лайка
+    deleteLikeCard(cardId) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
+            }
         })
         .then(res => {
             if (res.ok) {
@@ -79,26 +129,13 @@ export default class Api {
         })
     }
 
-    deleteCard() {
-        return fetch(this._url, {
+    // Удаление карточки
+    deleteCard(cardId) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this._headers
-        })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
+            headers: {
+                'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
             }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
-    }
-
-    editAvatar(avatarLink) {
-        return fetch(this._url, {
-            method: 'PATCH',
-            headers: this._headers,
-            body: JSON.stringify({
-                avatar: avatarLink
-            })
         })
         .then(res => {
             if (res.ok) {
