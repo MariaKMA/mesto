@@ -118,13 +118,14 @@ function openPopupAddCard() {
 }
 
 // Функция создания карточки
-function createCard(link, title, likes, cardId, canDelete) {
+function createCard(link, title, likes, cardId, canDelete, likeActive) {
     const card = new Card(
         link,
         title,
         likes,
         '.card-template',
-        canDelete, // флаг для отметки карточек, созданных мной и пригодных для удаления
+        canDelete, // флаг для отметки карточек, созданных нашим пользователем и пригодных для удаления
+        likeActive, // Флаг для отметки карточки, уже лайкнутой нашим пользователем
 
         // _handleCardClick - просмотр карточки
         (link, title) => {
@@ -182,7 +183,9 @@ const cardList = new Section({
     renderer: (item) => {
         // Проверяем по id пользователя, своя карточка или нет - возможно ли ее удаление пользователем
         const canDelete = item.owner._id === ownerId ? true : false;
-        const card = createCard(item.link, item.name, item.likes.length, item._id, canDelete);
+        // Проверяем по id пользователя, лайкнувшего карточку, наш ли пользователь ее лайкнул
+        const likeActive = item.likes.find(like => like._id === ownerId);
+        const card = createCard(item.link, item.name, item.likes.length, item._id, canDelete, likeActive);
         cardList.addItem(card);
     }
 }, cardsSection);
@@ -204,7 +207,7 @@ function handleAddCardFormSubmit(values) {
     api.addCard(values.placeTitle, values.imageLink)
         .then((res) => {
             // Создаем и отрисовываем карточку на странице, флаг canDelete устанавливаем в true
-            const card = createCard(res.link, res.name, res.likes.length, res._id, true);
+            const card = createCard(res.link, res.name, res.likes.length, res._id, true, false);
             cardList.addItem(card);
         })
         .catch((err) => {

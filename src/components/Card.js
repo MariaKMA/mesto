@@ -1,12 +1,13 @@
 export default class Card {
 
-    constructor(link, name, likes, cardSelector, canDelete, handleCardClick, handleCardLike, handleCardDelete) {
+    constructor(link, name, likes, cardSelector, canDelete, likeActive, handleCardClick, handleCardLike, handleCardDelete) {
 
         this._link = link;
         this._name = name;
         this._likes = likes;
         this._cardSelector = cardSelector;
         this._canDelete = canDelete;
+        this._likeActive = likeActive;
         this._handleCardClick = handleCardClick;
         this._handleCardLike = handleCardLike;
         this._handleCardDelete = handleCardDelete;
@@ -33,6 +34,10 @@ export default class Card {
         // Если передан флаг, что карточку нельзя удалять, то убираем иконку корзины
         if (!this._canDelete) {
             this._trashIcon.style.display = 'none';
+        }
+
+        if (this._likeActive) {
+            this.likeIcon.classList.add('card__like-icon_active');
         }
 
         this._setEventListeners();
