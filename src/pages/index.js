@@ -25,18 +25,19 @@ const api = new Api({
         }
 });
 
-// Получаем с сервера и выводим на страницу данные пользователя
-api.getUserInfo()
-    .then((result) => {
-        userName.textContent = result.name;
-        userInterest.textContent = result.about;
-        profileAvatar.src = result.avatar;
+// Получаем с сервера и выводим на страницу данные пользователя и начальные карточки
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+        userName.textContent = userData.name;
+        userInterest.textContent = userData.about;
+        profileAvatar.src = userData.avatar;
+        ownerId = userData._id;
+
+        cardList.renderItems(cards);
     })
-    // если запрос не ушел на сервер или сервер не ответил
     .catch((err) => {
         console.log(err);
     });
-
 
 // Экземпляр класса PopupWithForm - для формы редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSubmit);
@@ -198,14 +199,7 @@ const cardList = new Section({
     }
 }, cardsSection);
 
-// Отрисовываем на странице карточки, полученные с сервера
-api.getInitialCards()
-    .then((result) => {
-        cardList.renderItems(result);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+
 
 
 // Обработчик сабмита формы добавления новой карточки
