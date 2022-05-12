@@ -3,6 +3,14 @@ export default class Api {
         this._baseUrl = baseUrl;
         this._headers = headers;
     }
+
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+
     // Получение данных пользователя с сервера
     getUserInfo() {
         return fetch('https://nomoreparties.co/v1/cohort-40/users/me', {
@@ -11,14 +19,9 @@ export default class Api {
                 'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
+
     // Получение начальных карточек с сервера
     getInitialCards() {
         return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
@@ -27,11 +30,7 @@ export default class Api {
                 'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
         }
         })
-          .then(res => {
-            if (res.ok) {
-              return res.json();
-            }
-          });
+        .then(this._checkResponse)
       }
 
     // Редактирование профиля
@@ -47,13 +46,7 @@ export default class Api {
                 about: userInterest
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     // Редактирование аватара
@@ -68,12 +61,7 @@ export default class Api {
                 avatar: avatarLink
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     // Добавление пользователем новой карточки
@@ -89,12 +77,7 @@ export default class Api {
                 link: cardLink
             })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     // Простановка лайка
@@ -105,12 +88,7 @@ export default class Api {
                 'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     // Снятие лайка
@@ -121,12 +99,7 @@ export default class Api {
                 'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 
     // Удаление карточки
@@ -137,12 +110,7 @@ export default class Api {
                 'authorization': 'f09c6838-ffad-47d4-ac9e-28f932775532'
             }
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-        })
+        .then(this._checkResponse)
     }
 }
 
