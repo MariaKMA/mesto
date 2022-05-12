@@ -13,7 +13,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-import PopupAreYouSure from '../components/PopupAreYouSure.js'
+import PopupWithDeleteCard from '../components/PopupWithDeleteCard.js'
 
 
 // Экземпляр класса Api
@@ -49,6 +49,10 @@ popipEditAvatar.setEventListeners();
 // Экземпляр класса PopupWithForm - для формы добавления новой карточки
 const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
 popupAddCard.setEventListeners();
+
+// Экземпляр класса PopupWithDeleteCard - для удаления карточки
+const popupDeleteCard = new PopupWithDeleteCard('.popup_type_delete-card');
+popupDeleteCard.setEventListeners();
 
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
@@ -163,19 +167,17 @@ function createCard(link, title, likes, cardId, canDelete, likeActive) {
 
         // _handleCardDelete - удаление карточки
         () => {
-            // Экземпляр класса PopupWithForm - для удаления карточки
-            const popupDeleteCard = new PopupAreYouSure('.popup_type_delete-card', handleCardDeleteFormSubmit);
-            function handleCardDeleteFormSubmit() {
+            popupDeleteCard.onPopupSubmit(() => {
                 api.deleteCard(cardId) // удаляем карточку с сервера
+                .then((res) => {
+                    card.removeCard(); // удаляем карточку со страницы
+                    popupDeleteCard.close();
+                })
                 .catch((err) => {
                     console.log(err);
                 });
-                card.removeCard(); // удаляем карточку со страницы
-                popupDeleteCard.close();
-            }
-            popupDeleteCard.setEventListeners();
+            });
             popupDeleteCard.open();
-
         }
     );
     return card.generate();
