@@ -141,6 +141,8 @@ function createCard(link, title, likes, cardId, canDelete, likeActive) {
                 api.likeCard(cardId)
                     .then((result) => {
                         card.updateLikesCount(result);
+                        // Переключаем цвет сердечка, если пришел удачный ответ от сервера
+                        card.likeIcon.classList.toggle('card__like-icon_active');
                     })
                     .catch((err) => {
                         console.log(err);
@@ -150,6 +152,8 @@ function createCard(link, title, likes, cardId, canDelete, likeActive) {
                 api.deleteLikeCard(cardId)
                     .then((result) => {
                         card.updateLikesCount(result);
+                        // Переключаем цвет сердечка, если пришел удачный ответ от сервера
+                        card.likeIcon.classList.toggle('card__like-icon_active');
                     })
                     .catch((err) => {
                         console.log(err);

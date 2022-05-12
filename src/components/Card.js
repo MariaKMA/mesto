@@ -53,7 +53,7 @@ export default class Card {
 
         // Лайкнуть карточку
         this.likeIcon.addEventListener('click', () => {
-            this._likeIconClick();
+            this._handleCardLike();
         });
 
         // Удалить карточку
@@ -69,11 +69,6 @@ export default class Card {
 
     updateLikesCount(data) {
         this._likesCounter.textContent = data.likes.length; // отрисовываем количество лайков
-    }
-
-    _likeIconClick() {
-        this._handleCardLike();
-        this.likeIcon.classList.toggle('card__like-icon_active');
     }
 
     _deleteCardClick() {
