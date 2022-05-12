@@ -129,9 +129,9 @@ function createCard(link, title, likes, cardId, canDelete, likeActive) {
 
         // _handleCardClick - просмотр карточки
         (link, title) => {
-            const popupWithImage = new PopupWithImage(link, title, '.popup_type_view-pic');
+            const popupWithImage = new PopupWithImage('.popup_type_view-pic');
             popupWithImage.setEventListeners();
-            popupWithImage.open();
+            popupWithImage.open(link, title);
         },
 
         // _handleCardLike - простановка и снятие лайков
