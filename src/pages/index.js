@@ -54,6 +54,10 @@ popupAddCard.setEventListeners();
 const popupDeleteCard = new PopupWithDeleteCard('.popup_type_delete-card');
 popupDeleteCard.setEventListeners();
 
+// Экземпляр класса PopupWithImage - для просмотра карточки
+const popupWithImage = new PopupWithImage('.popup_type_view-pic');
+popupWithImage.setEventListeners();
+
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
@@ -133,8 +137,6 @@ function createCard(link, title, likes, cardId, canDelete, likeActive) {
 
         // _handleCardClick - просмотр карточки
         (link, title) => {
-            const popupWithImage = new PopupWithImage('.popup_type_view-pic');
-            popupWithImage.setEventListeners();
             popupWithImage.open(link, title);
         },
 
