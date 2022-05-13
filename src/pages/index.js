@@ -1,7 +1,7 @@
 import './index.css';
 
 import {formElementTypeUser, formElementTypePlace, formElementTypeAvatar,
-    profileEditBtn, inputUserName, inputUserInterest, cardsSection,
+    profileEditBtn, inputUserName, inputUserInterest, cardsSection, popupSaveBtn,
     profileAddBtn, config, profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
 
@@ -63,6 +63,10 @@ popupWithImage.setEventListeners();
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
+
+    // Меняем текст кнопки на Сохранение...
+    popupEditAvatar.changeBtnText();
+
     api.editAvatar(link)
         .then((res) => {
             profileUserInfo.setAvatar(res);
@@ -70,6 +74,9 @@ function handleEditAvatarSubmit(values) {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            popupEditAvatar.changeBackBtnText();
         });
 }
 
@@ -93,6 +100,10 @@ function openPopupEditForm() {
 
 // Обработчик сабмита формы редактирования профиля
 function handleProfileFormSubmit(userData) {
+
+    // меняем текст кнопки на Сохранение...
+    popupEditForm.changeBtnText();
+
     // отправляем обновленные данные на сервер
     api.updateUserInfo(userData.userName, userData.userInterest)
         .then((res) => {
@@ -102,6 +113,9 @@ function handleProfileFormSubmit(userData) {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            popupEditForm.changeBackBtnText();
         });
 }
 
@@ -208,6 +222,9 @@ const cardList = new Section({
 // Обработчик сабмита формы добавления новой карточки
 function handleAddCardFormSubmit(values) {
 
+    // Меняем текст кнопки на Сохранение...
+    popupAddCard.changeBtnText();
+
     // Отправляем новую карточку на сервер
     api.addCard(values.placeTitle, values.imageLink)
         .then((res) => {
@@ -218,6 +235,9 @@ function handleAddCardFormSubmit(values) {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            popupAddCard.changeBackBtnText();
         });
 }
 
