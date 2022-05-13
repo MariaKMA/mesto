@@ -210,12 +210,11 @@ function handleAddCardFormSubmit(values) {
             // Создаем и отрисовываем карточку на странице, флаг canDelete устанавливаем в true
             const card = createCard(res.link, res.name, res.likes.length, res._id, true, false);
             cardList.addItem(card);
+            popupAddCard.close();
         })
         .catch((err) => {
             console.log(err);
         });
-
-    popupAddCard.close();
 }
 
 // Слушатель клика по кнопке редактирования профиля
