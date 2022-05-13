@@ -1,7 +1,7 @@
 import './index.css';
 
 import {formElementTypeUser, formElementTypePlace, formElementTypeAvatar,
-    profileEditBtn, inputUserName, inputUserInterest, cardsSection, popupSaveBtn,
+    profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config, profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
 

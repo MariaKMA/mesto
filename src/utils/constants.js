@@ -42,8 +42,6 @@ export const profileAddBtn = document.querySelector('.profile__add-btn');
 export const profileAvatarAria = document.querySelector('.profile__avatar-aria');
 export const profileAvatarEditBtn = document.querySelector('.profile__avatar-edit-btn');
 
-export const popupSaveBtn = document.querySelector('.popup__save-btn');
-
 export const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
