@@ -37,9 +37,6 @@ export const inputUserInterest = formElementTypeUser.querySelector('.popup__user
 export const cardsSection = document.querySelector('.cards');
 export const profileAddBtn = document.querySelector('.profile__add-btn');
 
-export const userName = document.querySelector('.profile__user-name');
-export const userInterest = document.querySelector('.profile__user-interest');
-export const profileAvatar = document.querySelector('.profile__avatar');
 export const profileAvatarAria = document.querySelector('.profile__avatar-aria');
 export const profileAvatarEditBtn = document.querySelector('.profile__avatar-edit-btn');
 
@@ -51,5 +48,3 @@ export const config = {
     submitButtonSelector: '.popup__save-btn',
     submitButtonErrorClass: 'popup__save-btn_invalid'
 };
-
-export const ownerId = 'ead37e227a5255f9ff26c281';

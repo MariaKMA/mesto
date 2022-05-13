@@ -2,8 +2,7 @@ import './index.css';
 
 import {formElementTypeUser, formElementTypePlace,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
-    profileAddBtn, config, userName, userInterest, profileAvatar,
-    profileAvatarAria, profileAvatarEditBtn, ownerId
+    profileAddBtn, config, profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
@@ -14,7 +13,6 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import PopupWithDeleteCard from '../components/PopupWithDeleteCard.js'
-
 
 // Экземпляр класса Api
 const api = new Api({
@@ -28,10 +26,9 @@ const api = new Api({
 // Получаем с сервера и выводим на страницу данные пользователя и начальные карточки
 Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([userData, cards]) => {
-        userName.textContent = userData.name;
-        userInterest.textContent = userData.about;
-        profileAvatar.src = userData.avatar;
-        ownerId = userData._id;
+        profileUserInfo.setUserInfo(userData);
+        profileUserInfo.setAvatar(userData);
+        profileUserInfo.setUserId(userData);
 
         cardList.renderItems(cards);
     })
@@ -59,21 +56,21 @@ popupDeleteCard.setEventListeners();
 const popupWithImage = new PopupWithImage('.popup_type_view-pic');
 popupWithImage.setEventListeners();
 
+// Экземпляр класса UserInfo
+const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest', avatarSelector: '.profile__avatar'});
+
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
     api.editAvatar(link)
         .then((res) => {
-            profileAvatar.src = res.avatar;
+            profileUserInfo.setAvatar(res.avatar);
+            popipEditAvatar.close();
         })
         .catch((err) => {
             console.log(err);
         });
-    popipEditAvatar.close();
 }
-
-// Экземпляр класса UserInfo
-const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest'});
 
 // Запуск валидации форм
 const validatorUserForm = new FormValidator(config, formElementTypeUser);
@@ -94,12 +91,14 @@ function openPopupEditForm() {
 function handleProfileFormSubmit(userData) {
     // отправляем обновленные данные на сервер
     api.updateUserInfo(userData.userName, userData.userInterest)
+        .then((res) => {
+            // данные из инпутов после удачного ответа сервера записываем на страницу в профиль пользователя
+            profileUserInfo.setUserInfo(res);
+            popupEditForm.close();
+        })
         .catch((err) => {
             console.log(err);
         });
-
-    profileUserInfo.setUserInfo(userData); // данные из инпутов записываем на страницу в профиль пользователя
-    popupEditForm.close();
 }
 
 // Обработчик наведения мыши на аватар
@@ -191,16 +190,15 @@ const cardList = new Section({
     items: [],
     renderer: (item) => {
         // Проверяем по id пользователя, своя карточка или нет - возможно ли ее удаление пользователем
-        const canDelete = item.owner._id === ownerId ? true : false;
+        const userInfo = profileUserInfo.getUserInfo();
+        const canDelete = item.owner._id === userInfo.userId ? true : false;
+
         // Проверяем по id пользователя, лайкнувшего карточку, наш ли пользователь ее лайкнул
-        const likeActive = item.likes.find(like => like._id === ownerId);
+        const likeActive = item.likes.find(like => like._id === userInfo.userId);
         const card = createCard(item.link, item.name, item.likes.length, item._id, canDelete, likeActive);
         cardList.addItem(card);
     }
 }, cardsSection);
-
-
-
 
 // Обработчик сабмита формы добавления новой карточки
 function handleAddCardFormSubmit(values) {
