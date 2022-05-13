@@ -23,6 +23,9 @@ const api = new Api({
         }
 });
 
+// Экземпляр класса UserInfo
+const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest', avatarSelector: '.profile__avatar'});
+
 // Получаем с сервера и выводим на страницу данные пользователя и начальные карточки
 Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([userData, cards]) => {
@@ -41,8 +44,8 @@ const popupEditForm = new PopupWithForm('.popup_type_user', handleProfileFormSub
 popupEditForm.setEventListeners();
 
 // Экземпляр класса PopupWuthForm - для формы редактирования аватара
-const popipEditAvatar = new PopupWithForm('.popup_type_avatar', handleEditAvatarSubmit);
-popipEditAvatar.setEventListeners();
+const popupEditAvatar = new PopupWithForm('.popup_type_avatar', handleEditAvatarSubmit);
+popupEditAvatar.setEventListeners();
 
 // Экземпляр класса PopupWithForm - для формы добавления новой карточки
 const popupAddCard = new PopupWithForm('.popup_type_place', handleAddCardFormSubmit);
@@ -56,16 +59,14 @@ popupDeleteCard.setEventListeners();
 const popupWithImage = new PopupWithImage('.popup_type_view-pic');
 popupWithImage.setEventListeners();
 
-// Экземпляр класса UserInfo
-const profileUserInfo = new UserInfo({userNameSelector: '.profile__user-name', userInterestSelector: '.profile__user-interest', avatarSelector: '.profile__avatar'});
 
 // Редактирование аватарки: отправляем на сервер новую ссылку и отрисовываем
 function handleEditAvatarSubmit(values) {
     const link = values.avatarLink;
     api.editAvatar(link)
         .then((res) => {
-            profileUserInfo.setAvatar(res.avatar);
-            popipEditAvatar.close();
+            profileUserInfo.setAvatar(res);
+            popupEditAvatar.close();
         })
         .catch((err) => {
             console.log(err);
@@ -116,7 +117,7 @@ function hideAvatarEditIcon(evt) {
 
 // Обработчик клика по кнопке редактирования аватара
 function openPopupEditAvatar() {
-    popipEditAvatar.open();
+    popupEditAvatar.open();
 }
 
 // Открываем попап добавления новой карточки
