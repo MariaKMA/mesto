@@ -1,6 +1,6 @@
 import './index.css';
 
-import {formElementTypeUser, formElementTypePlace,
+import {formElementTypeUser, formElementTypePlace, formElementTypeAvatar,
     profileEditBtn, inputUserName, inputUserInterest, cardsSection,
     profileAddBtn, config, profileAvatarAria, profileAvatarEditBtn
 } from "../utils/constants.js";
@@ -80,6 +80,9 @@ validatorUserForm.enableValidation();
 const validatorPlaceForm = new FormValidator(config, formElementTypePlace);
 validatorPlaceForm.enableValidation();
 
+const validatorAvatarForm = new FormValidator(config, formElementTypeAvatar);
+validatorAvatarForm.enableValidation();
+
 // Открываем попап с формой редактирования профиля
 function openPopupEditForm() {
     const userData = profileUserInfo.getUserInfo(); // получаем объект с данными пользователя, которые вставляем в открываемую форму
@@ -118,6 +121,7 @@ function hideAvatarEditIcon(evt) {
 // Обработчик клика по кнопке редактирования аватара
 function openPopupEditAvatar() {
     popupEditAvatar.open();
+    validatorAvatarForm.setSubmitButtonState(); // Деактивируем кнопку сабмита при открытии формы
 }
 
 // Открываем попап добавления новой карточки

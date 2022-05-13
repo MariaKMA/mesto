@@ -27,6 +27,8 @@ export const initialCards = [
 
 export const formElementTypeUser = document.querySelector('.popup__container_type_user');
 export const formElementTypePlace = document.querySelector('.popup__container_type_place');
+export const formElementTypeAvatar = document.querySelector('.popup__container_type_avatar');
+
 
 // Переменные для редактирования профиля
 export const profileEditBtn = document.querySelector('.profile__edit-btn');
